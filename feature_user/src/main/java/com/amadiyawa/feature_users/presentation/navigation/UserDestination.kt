@@ -3,6 +3,7 @@ package com.amadiyawa.feature_users.presentation.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.outlined.People
+import com.amadiyawa.feature_base.domain.util.UserRole
 import com.amadiyawa.feature_base.presentation.navigation.DestinationPlacement
 import com.amadiyawa.feature_base.presentation.navigation.NavDestinationContract
 import com.amadiyawa.feature_user.R
@@ -42,4 +43,7 @@ object UserDestination : NavDestinationContract {
      * Specifies that the "Users" screen should be placed in the BottomBar navigation.
      */
     override val placement = DestinationPlacement.BottomBar
+
+    // Allow Clients and Admins to access this feature
+    override val allowedRoles = setOf(UserRole.CLIENT, UserRole.ADMIN)
 }

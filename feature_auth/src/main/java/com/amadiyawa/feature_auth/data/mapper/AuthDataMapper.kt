@@ -16,9 +16,9 @@ import com.amadiyawa.feature_auth.domain.model.ClientUser
 import com.amadiyawa.feature_auth.domain.model.OtpVerificationResult
 import com.amadiyawa.feature_auth.domain.model.User
 import com.amadiyawa.feature_auth.domain.model.VerificationResult
-import com.amadiyawa.feature_auth.domain.util.AdminAccessLevel
-import com.amadiyawa.feature_auth.domain.util.UserRole
-import com.amadiyawa.feature_auth.domain.util.UserStatus
+import com.amadiyawa.feature_base.domain.util.AdminAccessLevel
+import com.amadiyawa.feature_base.domain.util.UserRole
+import com.amadiyawa.feature_base.domain.util.UserStatus
 import com.amadiyawa.feature_auth.domain.util.VerificationType
 
 /**

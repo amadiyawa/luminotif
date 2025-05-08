@@ -1,0 +1,150 @@
+package com.amadiyawa.feature_base.domain.model
+
+import com.amadiyawa.feature_base.domain.repository.SessionRepository
+import com.amadiyawa.feature_base.domain.result.OperationResult
+import com.amadiyawa.feature_base.domain.util.UserRole
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import timber.log.Timber
+
+/**
+ * Manager class that handles the current user session and observes changes
+ * to update the navigation UI accordingly.
+ */
+class UserSessionManager(
+    private val sessionRepository: SessionRepository,
+    private val json: Json
+) {
+    // Coroutine scope for background operations
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    // Private mutable state flow to store the current user role
+    private val _currentRole = MutableStateFlow<UserRole?>(null)
+
+    // Public immutable state flow that can be observed
+    val currentRole: StateFlow<UserRole?> = _currentRole.asStateFlow()
+
+    init {
+        // Observe session changes
+        observeSession()
+    }
+
+    /**
+     * Initializes the UserSessionManager by loading the current user data
+     */
+    suspend fun initialize() {
+        refreshUserRole()
+    }
+
+    /**
+     * Extracts and refreshes the user role from persistent storage
+     */
+    private suspend fun refreshUserRole() = withContext(Dispatchers.Default) {
+        val userJsonResult = sessionRepository.getSessionUserJson()
+
+        if (userJsonResult is OperationResult.Success && userJsonResult.data != null) {
+            try {
+                extractRoleFromJson(userJsonResult.data)?.let { role ->
+                    _currentRole.value = role
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Error parsing user JSON")
+                _currentRole.value = null
+            }
+        } else {
+            _currentRole.value = null
+        }
+    }
+
+    /**
+     * Extracts the user role from the stored JSON string
+     */
+    private fun extractRoleFromJson(userJson: String): UserRole? {
+        return try {
+            val jsonElement = json.parseToJsonElement(userJson)
+            val authResult = jsonElement.jsonObject
+
+            // Extract user object
+            val userObject = authResult["user"]?.jsonObject
+
+            // Extract role from user object
+            val roleString = userObject?.get("role")?.jsonPrimitive?.content
+
+            // Map string to enum
+            mapStringToUserRole(roleString)
+        } catch (e: Exception) {
+            Timber.e(e, "Error extracting role from JSON")
+            null
+        }
+    }
+
+    /**
+     * Maps a role string to UserRole enum
+     */
+    private fun mapStringToUserRole(role: String?): UserRole? {
+        if (role == null) return null
+
+        return when (role.uppercase()) {
+            "CLIENT" -> UserRole.CLIENT
+            "AGENT" -> UserRole.AGENT
+            "ADMIN" -> UserRole.ADMIN
+            else -> null
+        }
+    }
+
+    /**
+     * Observes changes to the session state
+     */
+    private fun observeSession() {
+        // Create a flow that emits whenever session status changes or session content changes
+        sessionRepository.isSessionActive()
+            .onEach { isActive ->
+                if (!isActive) {
+                    _currentRole.value = null
+                } else if (_currentRole.value == null) {
+                    refreshUserRole()
+                }
+            }
+            .launchIn(scope)
+    }
+
+    /**
+     * Gets the user role as a Flow, re-evaluated each time
+     * the session changes
+     */
+    fun observeUserRole(): Flow<UserRole?> {
+        return sessionRepository.isSessionActive().combine(currentRole) { isActive, role ->
+            if (isActive) role else null
+        }
+    }
+
+    /**
+     * Checks if the current user has permission to access a specific feature
+     * @param requiredRoles The roles that have access to the feature
+     * @return True if the user has one of the required roles, false otherwise
+     */
+    fun hasPermission(vararg requiredRoles: UserRole): Boolean {
+        val currentRole = _currentRole.value ?: return false
+        return requiredRoles.contains(currentRole)
+    }
+
+    /**
+     * Clears the current user session on logout
+     */
+    suspend fun clearSession() {
+        sessionRepository.clearSession()
+        _currentRole.value = null
+    }
+}

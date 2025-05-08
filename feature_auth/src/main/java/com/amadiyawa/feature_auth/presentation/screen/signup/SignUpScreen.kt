@@ -1,7 +1,5 @@
 package com.amadiyawa.feature_auth.presentation.screen.signup
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.text.KeyboardActions
@@ -12,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -29,9 +26,9 @@ import com.amadiyawa.feature_base.common.util.getCountryDialCode
 import com.amadiyawa.feature_base.domain.model.FieldValue
 import com.amadiyawa.feature_base.presentation.compose.composable.AuthHeader
 import com.amadiyawa.feature_base.presentation.compose.composable.DefaultTextField
-import com.amadiyawa.feature_base.presentation.compose.composable.FilledButton
 import com.amadiyawa.feature_base.presentation.compose.composable.FormScaffold
-import com.amadiyawa.feature_base.presentation.compose.composable.LoadingAnimation
+import com.amadiyawa.feature_base.presentation.compose.composable.LoadingButton
+import com.amadiyawa.feature_base.presentation.compose.composable.LoadingButtonParams
 import com.amadiyawa.feature_base.presentation.compose.composable.TermsAndConditions
 import com.amadiyawa.feature_base.presentation.compose.composable.TextFieldConfig
 import com.amadiyawa.feature_base.presentation.compose.composable.TextFieldText
@@ -45,17 +42,18 @@ internal fun SignUpScreen(
 ) {
     val viewModel: SignUpViewModel = koinViewModel()
     val uiState by viewModel.uiStateFlow.collectAsState()
-    val uiEvent = viewModel.uiEvent.collectAsState(initial = null)
+    val events = viewModel.events.collectAsState(initial = null)
 
     SetupContent(
         state = uiState,
-        onAction = viewModel::dispatch,
-        viewModel = viewModel
+        onAction = viewModel::dispatch
     )
 
-    uiEvent.value?.let { event ->
+    events.value?.let { event ->
         when (event) {
-            is SignUpUiEvent.NavigateToMainScreen -> onSignUpSuccess()
+            is SignUpUiEvent.NavigateToMainScreen -> {
+                onSignUpSuccess()
+            }
             is SignUpUiEvent.ShowSnackbar -> {
                 LaunchedEffect(Unit) {
                     Timber.e("Snackbar: ${event.message}")
@@ -68,42 +66,32 @@ internal fun SignUpScreen(
 @Composable
 private fun SetupContent(
     state: SignUpUiState,
-    onAction: (SignUpAction) -> Unit,
-    viewModel: SignUpViewModel
+    onAction: (SignUpAction) -> Unit
 ) {
-    when (state) {
-        is SignUpUiState.Idle -> {
-            SignUpFormUI(
-                form = state.form,
-                onAction = onAction,
-                viewModel = viewModel
-            )
-        }
+    val form = when (state) {
+        is SignUpUiState.Idle -> state.form
+        is SignUpUiState.Loading -> state.form
+        is SignUpUiState.Error -> state.form
+    }
 
-        is SignUpUiState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                LoadingAnimation(visible = true)
-            }
-        }
-
-        is SignUpUiState.Error -> {
-            SignUpFormUI(
-                form = state.form,
-                onAction = onAction,
-                viewModel = viewModel
-            )
-            LaunchedEffect(Unit) {
-                Timber.e("Form error: ${state.message}")
-            }
+    if (state is SignUpUiState.Error) {
+        LaunchedEffect(state.message) {
+            Timber.e("Form error: ${state.message}")
         }
     }
+
+    SignUpFormUI(
+        form = form,
+        onAction = onAction,
+        uiState = state
+    )
 }
 
 @Composable
 internal fun SignUpFormUI(
     form: SignUpForm,
     onAction: (SignUpAction) -> Unit,
-    viewModel: SignUpViewModel
+    uiState: SignUpUiState
 ) {
     val phonePrefix = remember { getCountryDialCode() }
 
@@ -117,8 +105,6 @@ internal fun SignUpFormUI(
     val isFormValid by remember(form) {
         derivedStateOf { form.asValidatedForm().isValid }
     }
-
-    val isSubmitting by viewModel.isSubmitting.collectAsState()
 
     FormScaffold {
         AuthHeader(
@@ -303,7 +289,9 @@ internal fun SignUpFormUI(
         )
 
         TermsAndConditions(
-            modifier = Modifier.focusRequester(termsFocusRequester).focusTarget(),
+            modifier = Modifier
+                .focusRequester(termsFocusRequester)
+                .focusTarget(),
             isChecked = form.termsAccepted.value,
             onCheckedChange = { accepted ->
                 onAction(
@@ -312,13 +300,26 @@ internal fun SignUpFormUI(
             }
         )
 
-        FilledButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .requiredHeight(Dimen.Size.extraLarge),
-            text = stringResource(id = R.string.register),
-            onClick = { onAction(SignUpAction.Submit) },
-            enabled = isFormValid && !isSubmitting
+        LoadingButton(
+            params = LoadingButtonParams(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .requiredHeight(Dimen.Size.extraLarge),
+                enabled = isFormValid,
+                text = when (uiState) {
+                    is SignUpUiState.Loading.Authentication ->
+                        stringResource(R.string.signing_in)
+                    is SignUpUiState.Loading.SessionSaving ->
+                        stringResource(R.string.saving_session)
+                    is SignUpUiState.Loading.SessionActivation ->
+                        stringResource(R.string.activating_session)
+                    is SignUpUiState.Idle,
+                    is SignUpUiState.Error -> // Not loading states
+                        stringResource(id = R.string.register)
+                },
+                isLoading = uiState is SignUpUiState.Loading,
+                onClick = { onAction(SignUpAction.Submit) }
+            )
         )
     }
 }

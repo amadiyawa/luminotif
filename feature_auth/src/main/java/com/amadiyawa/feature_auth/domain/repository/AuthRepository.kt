@@ -4,6 +4,7 @@ import com.amadiyawa.feature_auth.data.dto.request.ForgotPasswordRequest
 import com.amadiyawa.feature_auth.data.dto.request.OtpVerificationRequest
 import com.amadiyawa.feature_auth.data.dto.request.ResendOtpRequest
 import com.amadiyawa.feature_auth.data.dto.request.SignInRequest
+import com.amadiyawa.feature_auth.data.dto.request.SignUpRequest
 import com.amadiyawa.feature_auth.domain.model.AuthResult
 import com.amadiyawa.feature_auth.domain.model.OtpVerificationResult
 import com.amadiyawa.feature_auth.domain.model.VerificationResult

@@ -1,10 +1,16 @@
-rootProject.name = "DroidKotlin"
+rootProject.name = "Luminotif"
 include(
     ":app",
     ":feature_base",
     ":feature_onboarding",
     ":feature_auth",
-    ":feature_user"
+    ":feature_user",
+    ":feature_fallback",
+    ":feature_billing",
+    ":feature_requests",
+    ":feature_meter",
+    ":feature_consumption",
+    ":feature_admin",
 )
 
 pluginManagement {

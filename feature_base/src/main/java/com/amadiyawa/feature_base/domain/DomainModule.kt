@@ -1,5 +1,6 @@
 package com.amadiyawa.feature_base.domain
 
+import com.amadiyawa.feature_base.domain.model.UserSessionManager
 import com.amadiyawa.feature_base.domain.usecase.ValidateEmailOrPhoneUseCase
 import com.amadiyawa.feature_base.domain.usecase.ValidateEmailUseCase
 import com.amadiyawa.feature_base.domain.usecase.ValidateFullNameUseCase
@@ -35,4 +36,7 @@ internal val domainModule = module {
     single { ValidatePasswordUseCase(androidContext()) }
     single { ValidatePasswordConfirmationUseCase(androidContext()) }
     single { ValidateTermsAcceptedUseCase(androidContext()) }
+
+    // UserSessionManager with all dependencies
+    single { UserSessionManager(get(), get()) }
 }

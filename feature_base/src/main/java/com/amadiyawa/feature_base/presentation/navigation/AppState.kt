@@ -4,6 +4,8 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.util.trace
@@ -13,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 
 /**
  * Represents the state of the application, including navigation, window size, and coroutine scope.
@@ -28,17 +31,22 @@ import kotlinx.coroutines.CoroutineScope
 class AppState(
     val navController: NavHostController,
     val windowSizeClass: WindowSizeClass,
-    val coroutineScope: CoroutineScope
+    val coroutineScope: CoroutineScope,
+    val destinationRegistry: NewDynamicDestinationRegistry
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
-    private val destinations: List<NavDestinationContract>
-        get() = DynamicDestinationRegistry.destinations
+    @Composable
+    fun getDestinations(): List<NavDestinationContract> {
+        val destinations by destinationRegistry.destinations.collectAsState()
+        return destinations
+    }
 
     @Composable
     private fun isVisibleExactly(placement: DestinationPlacement): Boolean {
         val currentRoute = currentDestination?.route
+        val destinations = getDestinations()
         return destinations.any {
             it.placement == placement && (it.route == currentRoute || it.destination == currentRoute)
         }
@@ -86,9 +94,10 @@ class AppState(
 fun rememberAppState(
     navController: NavHostController = rememberNavController(),
     windowSizeClass: WindowSizeClass,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    destinationRegistry: NewDynamicDestinationRegistry = koinInject()
 ): AppState {
     return remember(navController, windowSizeClass, coroutineScope) {
-        AppState(navController, windowSizeClass, coroutineScope)
+        AppState(navController, windowSizeClass, coroutineScope, destinationRegistry)
     }
 }

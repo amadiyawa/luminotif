@@ -1,31 +1,30 @@
 package com.amadiyawa.feature_auth.presentation.screen.signup
 
 import androidx.lifecycle.viewModelScope
-import com.amadiyawa.feature_auth.data.dto.response.VerificationResponse
-import com.amadiyawa.feature_auth.data.mapper.AuthDataMapper.toDomain
+import com.amadiyawa.feature_auth.data.dto.request.SignInRequest
 import com.amadiyawa.feature_auth.domain.mapper.toSignUpForm
+import com.amadiyawa.feature_auth.domain.model.AuthResult
 import com.amadiyawa.feature_auth.domain.model.SignUpForm
+import com.amadiyawa.feature_auth.domain.model.toJson
 import com.amadiyawa.feature_auth.domain.model.updateAndValidateField
-import com.amadiyawa.feature_auth.domain.util.OtpPurpose
+import com.amadiyawa.feature_auth.domain.usecase.SignInUseCase
 import com.amadiyawa.feature_auth.domain.util.validation.SignUpFormValidator
+import com.amadiyawa.feature_base.domain.model.ValidatedForm
+import com.amadiyawa.feature_base.domain.repository.SessionRepository
+import com.amadiyawa.feature_base.domain.result.OperationResult
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.BaseViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class SignUpViewModel(
     private val validator: SignUpFormValidator,
+    private val signInUseCase: SignInUseCase,
+    private val sessionRepository: SessionRepository
 ) : BaseViewModel<SignUpUiState, SignUpAction>(SignUpUiState.Idle()) {
 
-    private val _uiEvent = MutableSharedFlow<SignUpUiEvent>()
-    val uiEvent = _uiEvent.asSharedFlow()
-
-    private val _isSubmitting = MutableStateFlow(false)
-    val isSubmitting: StateFlow<Boolean> = _isSubmitting.asStateFlow()
+    // Jobs
+    private var signUpJob: Job? = null
 
     val form: SignUpForm
         get() = when (val s = state) {
@@ -70,19 +69,74 @@ internal class SignUpViewModel(
     private fun handleSubmit() {
         val result = validator.validate(form)
         if (!result.isValid) {
-            dispatch(SignUpAction.ShowValidationErrors(result.toSignUpForm()))
+            handleValidationError(result)
             return
         }
 
-        _isSubmitting.value = true
-        setState { SignUpUiState.Loading(form = form) }
+        setState { SignUpUiState.Loading.Authentication(form = form) }
 
-        viewModelScope.launch {
-            delay(2000) // simulate API call
-            val data = VerificationResponse.random(OtpPurpose.SIGN_UP.name).toDomain()
-            data.purpose = OtpPurpose.SIGN_UP
-            _uiEvent.emit(SignUpUiEvent.NavigateToMainScreen)
-            _isSubmitting.value = false
+        signUpJob?.cancel()
+        signUpJob = viewModelScope.launch {
+            val result = signInUseCase(
+                SignInRequest(
+                    identifier = form.email.value,
+                    password = form.password.value
+                )
+            )
+            handleAuthResult(result)
         }
+    }
+
+    private suspend fun handleAuthResult(
+        result: OperationResult<AuthResult>
+    ) {
+        when (result) {
+            is OperationResult.Success -> handleAuthSuccess(result.data)
+            is OperationResult.Error -> handleAuthError(result.message!!)
+            is OperationResult.Failure -> handleAuthError(result.message!!)
+        }
+    }
+
+    private suspend fun handleAuthSuccess(authResult: AuthResult) {
+        setState { SignUpUiState.Loading.SessionSaving(form = form) }
+        delay(2000)
+
+        val saveResult = sessionRepository.saveSessionUserJson(authResult.toJson())
+        if (saveResult is OperationResult.Success) {
+            val activeResult = sessionRepository.setSessionActive(true)
+
+            setState { SignUpUiState.Loading.SessionActivation(form = form) }
+            delay(2000)
+            if (activeResult is OperationResult.Success) {
+                emitEvent(SignUpUiEvent.ShowSnackbar("Sign in successful"))
+                emitEvent(SignUpUiEvent.NavigateToMainScreen)
+                setState { SignUpUiState.Idle(form = SignUpForm()) }
+            } else if (activeResult is OperationResult.Error) {
+                handleAuthError(
+                    message = activeResult.message!!
+                )
+            }
+        } else if (saveResult is OperationResult.Error) {
+            handleAuthError(
+                message = saveResult.message!!
+            )
+        }
+    }
+
+    private fun handleAuthError(
+        message: String
+    ) {
+        setState { SignUpUiState.Error(form = form, message = message) }
+        emitEvent(SignUpUiEvent.ShowSnackbar(message))
+    }
+
+    private fun handleValidationError(validated: ValidatedForm) {
+        setState {
+            SignUpUiState.Error(
+                form = validated.toSignUpForm(),
+                message = "Please correct the form errors"
+            )
+        }
+        emitEvent(SignUpUiEvent.ShowSnackbar("Please correct the form errors"))
     }
 }

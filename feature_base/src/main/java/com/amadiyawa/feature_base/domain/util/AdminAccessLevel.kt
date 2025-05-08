@@ -1,4 +1,4 @@
-package com.amadiyawa.feature_auth.domain.util
+package com.amadiyawa.feature_base.domain.util
 
 enum class AdminAccessLevel {
     BASIC,
