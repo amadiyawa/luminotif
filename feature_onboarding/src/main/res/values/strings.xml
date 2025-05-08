@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Onboarding Titles -->
+    <string name="onboard_title_1">Welcome to DroidKotlin</string>
+    <string name="onboard_title_2">Fast and Efficient Development</string>
+    <string name="onboard_title_3">Simplified Service Connection</string>
+    <string name="onboard_title_4">Easy Interface Customization</string>
+    <string name="onboard_title_5">Ready to Code?</string>
+
+    <!-- Onboarding Descriptions -->
+    <string name="onboard_description_1">Quickly launch your Android projects with DroidKotlin, a robust and scalable base for modern development.</string>
+    <string name="onboard_description_2">Take advantage of an optimized architecture to create high-performance and scalable applications.</string>
+    <string name="onboard_description_3">DroidKotlin is ready to connect to your REST APIs, handle data, and manage state efficiently.</string>
+    <string name="onboard_description_4">Use reusable components to customize the design according to your needs.</string>
+    <string name="onboard_description_5">You\'re ready to go! Launch your first project with DroidKotlin and develop like a pro.</string>
+
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="get_started">Get Started!</string>
+</resources>

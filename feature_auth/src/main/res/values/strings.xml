@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_welcome_title">Welcome to DroidKotlin</string>
+    <string name="auth_welcome_description">Kickstart your Android development with the right tools and modern practices.</string>
+    <string name="continue_with">Or continue with</string>
+
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+
+    <string name="register_button">Register</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_empty_password">Password cannot be empty</string>
+
+    <string name="welcome_back">Welcome back!</string>
+    <string name="welcome_message">Sign in to continue</string>
+    <string name="identifier">Identifier</string>
+    <string name="identifier_placeholder">Email, phone or username</string>
+    <string name="password">Password</string>
+    <string name="password_placeholder">Enter your password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+
+    <string name="signin_description">Access your DroidKotlin dashboard and keep building amazing apps.</string>
+
+    <string name="signup_title">Create your account</string>
+    <string name="signup_description">Join DroidKotlin and start building scalable Android apps in seconds.</string>
+    <string name="fullname">Full name</string>
+    <string name="fullname_placeholder">Amadou Iyawa</string>
+    <string name="username">Username</string>
+    <string name="username_placeholder">amadiyawa</string>
+    <string name="email_placeholder">amadiyawa@yahoo.com</string>
+    <string name="phone">Phone number</string>
+    <string name="phone_placeholder">699182482</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password_placeholder">Confirm your password</string>
+
+    <string name="otp_title">Verify your %s</string>
+    <string name="otp_description_email">Please enter the code we sent to your email address %s.</string>
+    <string name="otp_description_phone">Please enter the code we sent to your phone number %s.</string>
+    <string name="verify">Verify</string>
+    <string name="validate">Validate</string>
+    <string name="resend">Resend</string>
+    <string name="reset">Reset</string>
+    <string name="resend_timer_separator"> in </string>
+
+    <string name="forgot_password_title">Forgot Password?</string>
+    <string name="forgot_password_description">Enter your email or phone number to reset your password.</string>
+    <string name="forgot_password_placeholder">Enter your email or phone number</string>
+
+    <string name="reset_password_title">Reset your password</string>
+    <string name="reset_password_description">Please enter your new password below.</string>
+
+    <!-- SignIn Loading States -->
+    <string name="signing_in">Signing in…</string>
+    <string name="social_signing_in">Signing in with %s…</string>
+    <string name="saving_session">Saving your session…</string>
+    <string name="activating_session">Activating your session…</string>
+
+    <string name="sending">Sending…</string>
+    <string name="verifying">Verifying…</string>
+
+    <string name="didnt_receive_code">Didn\'t receive the code?</string>
+</resources>

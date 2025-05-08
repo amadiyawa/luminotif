@@ -1,0 +1,88 @@
+<resources>
+    <string name="data_not_found">Data not found</string>
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
+    <string name="empty_toolbar_title"> </string>
+    <string name="back">Back</string>
+
+    <string name="invalid_identifier">Invalid identifier</string>
+    <string name="error_password_length">The password must contain at least %d characters.</string>
+    <string name="add_uppercase">Add at least an uppercase letter.</string>
+    <string name="add_lowercase">Add at least a lowercase letter.</string>
+    <string name="add_digit">Add at least a digit.</string>
+    <string name="add_special_character">Add at least a special character.</string>
+    <string name="error_password_space">The password must not contain space.</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="clear_text">Clear text</string>
+
+    <string name="full_name">Full name</string>
+    <string name="invalid_full_name">Full name must contain only letters, dashes or spaces (2 to 50 characters)</string>
+    <string name="username">Username</string>
+    <string name="invalid_username">Invalid username (3–20 chars, . - _ allowed)</string>
+    <string name="email">Email</string>
+    <string name="invalid_email">Invalid email address. Example: name@example.com</string>
+    <string name="phone">Phone number</string>
+    <string name="invalid_phone">Invalid phone number. Expected format: +2376XXXXXXXX</string>
+    <string name="passwords_do_not_match">Passwords do not match.</string>
+    <string name="terms_not_accepted">You must accept the terms and conditions.</string>
+
+    <string name="tos_pre_text">By signing up, you agree to our </string>
+    <string name="tos_terms">Terms of Service</string>
+    <string name="tos_separator"> and </string>
+    <string name="tos_privacy">Privacy Policy</string>
+    <string name="tos_post_text">.</string>
+
+    <!-- OTP Validation Strings -->
+    <string name="invalid_otp_digit">Each field must contain exactly one digit.</string>
+    <string name="invalid_otp_format">The OTP code must contain exactly 6 digits.</string>
+    <string name="otp_code_mismatch">The code you entered does not match.</string>
+
+    <string name="error_title">Oops! Something went wrong.</string>
+    <string name="error_retry">Try Again</string>
+
+    <!-- Authentication error messages -->
+    <string name="error_invalid_credentials">Invalid login credentials</string>
+    <string name="error_session_expired">Your session has expired. Please log in again</string>
+    <string name="error_unauthorized">You don\'t have permission to access this resource</string>
+    <string name="error_account_not_found">Account not found. Please check your credentials</string>
+    <string name="error_too_many_attempts">Too many login attempts. Please try again later</string>
+
+    <!-- Social authentication errors -->
+    <string name="error_social_account_not_linked">Social account not linked to any existing account</string>
+    <string name="error_social_auth_cancelled">Social authentication was cancelled</string>
+    <string name="error_social_auth_connection_failed">Failed to connect to authentication server</string>
+
+    <!-- Session errors -->
+    <string name="error_session_save_failed">Your session couldn\'t be saved</string>
+    <string name="error_session_activation_failed">Session activation failed</string>
+
+    <!-- Network errors -->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_connection_timeout">Connection timed out</string>
+    <string name="error_server_unavailable">Server is currently unavailable</string>
+
+    <!-- Generic errors -->
+    <string name="error_unknown">An unknown error occurred</string>
+    <string name="error_authentication_failed">Authentication failed</string>
+
+
+    <string name="error_400">Invalid request: %1$s</string>
+    <string name="error_401">Authentication failed</string>
+    <string name="error_403">Access denied</string>
+    <string name="error_500">System error occurred</string>
+    <string name="error_503">Service unavailable. Please check your connection</string>
+
+    <!-- Session Repository Errors -->
+    <string name="error_session_save_user">Failed to save user session data</string>
+    <string name="error_session_get_user">Failed to retrieve user session data</string>
+    <string name="error_session_update_state">Failed to update session state</string>
+    <string name="error_session_clear">Failed to clear session data</string>
+    <string name="error_session_generic">Session operation failed</string>
+
+    <string name="single_digit_only">Please enter a single digit</string>
+    <string name="numbers_only">Only numbers are allowed</string>
+    <string name="otp_length_error">OTP must be 6 digits</string>
+    <string name="otp_mismatch">Codes don\'t match</string>
+    <string name="invalid_otp">Invalid verification code</string>
+</resources>
