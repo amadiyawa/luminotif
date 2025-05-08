@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Onboarding Titles -->
-    <string name="onboard_title_1">Welcome to DroidKotlin</string>
-    <string name="onboard_title_2">Fast and Efficient Development</string>
-    <string name="onboard_title_3">Simplified Service Connection</string>
-    <string name="onboard_title_4">Easy Interface Customization</string>
-    <string name="onboard_title_5">Ready to Code?</string>
+    <string name="onboard_title_1">Welcome to Luminotif</string>
+    <string name="onboard_title_2">Manage Your Bills with Ease</string>
+    <string name="onboard_title_3">Request Services Instantly</string>
+    <string name="onboard_title_4">Track Your Consumption</string>
+    <string name="onboard_title_5">Ready to Get Started?</string>
 
     <!-- Onboarding Descriptions -->
-    <string name="onboard_description_1">Quickly launch your Android projects with DroidKotlin, a robust and scalable base for modern development.</string>
-    <string name="onboard_description_2">Take advantage of an optimized architecture to create high-performance and scalable applications.</string>
-    <string name="onboard_description_3">DroidKotlin is ready to connect to your REST APIs, handle data, and manage state efficiently.</string>
-    <string name="onboard_description_4">Use reusable components to customize the design according to your needs.</string>
-    <string name="onboard_description_5">You\'re ready to go! Launch your first project with DroidKotlin and develop like a pro.</string>
+    <string name="onboard_description_1">Your all-in-one solution for electricity management, service requests, and consumption tracking.</string>
+    <string name="onboard_description_2">View, pay, and track your electricity bills in real-time with our simple and secure payment system.</string>
+    <string name="onboard_description_3">Report issues, request services, and track their status - all from the palm of your hand.</string>
+    <string name="onboard_description_4">Monitor your energy usage, view consumption trends, and get tips to reduce your electricity bills.</string>
+    <string name="onboard_description_5">You\'re all set! Sign in or create an account to start managing your electricity services efficiently.</string>
 
     <string name="skip">Skip</string>
     <string name="next">Next</string>

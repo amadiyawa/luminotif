@@ -53,18 +53,12 @@ fun WelcomeScreen(
             centerContent = true
         )
 
-        // Center section: Sign in and Sign up buttons
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(MaterialTheme.dimension.spacing.large))
 
         SignInSignUpButtons(
             onSignIn = onSignIn,
             onSignUp = onSignUp
         )
-
-        // Bottom section: Social login options
-        Spacer(modifier = Modifier.weight(1f))
-
-        SocialAuthFooter()
     }
 }
 

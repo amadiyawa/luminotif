@@ -18,7 +18,6 @@ import com.amadiyawa.feature_auth.domain.util.SocialProvider
 import com.amadiyawa.feature_base.domain.result.OperationResult
 import kotlinx.coroutines.delay
 import timber.log.Timber
-import java.util.UUID
 import kotlin.random.Random
 
 /**
@@ -69,9 +68,7 @@ internal class SimulatedAuthRepository : AuthRepository {
     private fun simulateSignInSuccess(): OperationResult<AuthResult> {
         return OperationResult.success(
             AuthResponse.random().copy(
-                user = AuthResponse.random().user.copy(
-                    providerData = null
-                ),
+                user = AuthResponse.random().user,
                 metadata = mapOf(
                     "auth_method" to "email_password",
                     "simulated" to "true"
@@ -100,13 +97,7 @@ internal class SimulatedAuthRepository : AuthRepository {
     private fun simulateSuccess(provider: SocialProvider): OperationResult<AuthResult> {
         return OperationResult.success(
             AuthResponse.random().copy(
-                user = AuthResponse.random().user.copy(
-                    fullName = "${provider.name} User",
-                    email = "${provider.name.lowercase()}@simulated.com",
-                    providerData = mapOf(
-                        provider.name to "${provider.name.lowercase()}_${UUID.randomUUID()}"
-                    )
-                ),
+                user = AuthResponse.random().user,
                 metadata = mapOf(
                     "provider" to provider.name,
                     "simulated" to "true"

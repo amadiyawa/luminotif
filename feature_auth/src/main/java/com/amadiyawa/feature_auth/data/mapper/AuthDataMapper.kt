@@ -5,11 +5,20 @@ import com.amadiyawa.feature_auth.data.dto.response.OtpVerificationResponse
 import com.amadiyawa.feature_auth.data.dto.response.TokenResponse
 import com.amadiyawa.feature_auth.data.dto.response.UserResponse
 import com.amadiyawa.feature_auth.data.dto.response.VerificationResponse
+import com.amadiyawa.feature_auth.domain.model.AdminData
+import com.amadiyawa.feature_auth.domain.model.AdminUser
+import com.amadiyawa.feature_auth.domain.model.AgentData
+import com.amadiyawa.feature_auth.domain.model.AgentUser
 import com.amadiyawa.feature_auth.domain.model.AuthResult
 import com.amadiyawa.feature_auth.domain.model.AuthTokens
+import com.amadiyawa.feature_auth.domain.model.ClientData
+import com.amadiyawa.feature_auth.domain.model.ClientUser
 import com.amadiyawa.feature_auth.domain.model.OtpVerificationResult
 import com.amadiyawa.feature_auth.domain.model.User
 import com.amadiyawa.feature_auth.domain.model.VerificationResult
+import com.amadiyawa.feature_auth.domain.util.AdminAccessLevel
+import com.amadiyawa.feature_auth.domain.util.UserRole
+import com.amadiyawa.feature_auth.domain.util.UserStatus
 import com.amadiyawa.feature_auth.domain.util.VerificationType
 
 /**
@@ -27,24 +36,82 @@ internal object AuthDataMapper {
     }
 
     fun UserResponse.toDomain(): User {
-        return User(
-            id = id,
-            fullName = fullName,
-            username = username,
-            email = email,
-            phoneNumber = phoneNumber,
-            avatarUrl = avatarUrl,
-            isEmailVerified = isEmailVerified,
-            isPhoneVerified = isPhoneVerified,
-            roles = roles,
-            lastLoginAt = lastLoginAt,
-            isActive = isActive,
-            timezone = timezone,
-            locale = locale,
-            createdAt = createdAt,
-            updatedAt = updatedAt,
-            providerData = providerData,
-        )
+        // Create the appropriate user type based on role
+        return when (this.role.uppercase()) {
+            "CLIENT" -> ClientUser(
+                id = id,
+                name = fullName,
+                email = email,
+                phone = phoneNumber ?: "",
+                avatarUrl = avatarUrl,
+                role = UserRole.CLIENT,
+                status = UserStatus.ACTIVE,
+                clientData = this.clientData?.let {
+                    ClientData(
+                        accountNumber = it.accountNumber,
+                        meterNumber = it.meterNumber,
+                        area = it.area,
+                        address = it.address
+                    )
+                } ?: ClientData(
+                    accountNumber = "",
+                    meterNumber = "",
+                    area = "",
+                    address = ""
+                )
+            )
+
+            "AGENT" -> AgentUser(
+                id = id,
+                name = fullName,
+                email = email,
+                phone = phoneNumber ?: "",
+                avatarUrl = avatarUrl,
+                role = UserRole.AGENT,
+                status = UserStatus.ACTIVE,
+                agentData = this.agentData?.let {
+                    AgentData(
+                        employeeId = it.employeeId,
+                        territories = it.territories
+                    )
+                } ?: AgentData(
+                    employeeId = "",
+                    territories = emptyList()
+                )
+            )
+
+            "ADMIN" -> AdminUser(
+                id = id,
+                name = fullName,
+                email = email,
+                phone = phoneNumber ?: "",
+                avatarUrl = avatarUrl,
+                role = UserRole.ADMIN,
+                status = UserStatus.ACTIVE,
+                adminData = this.adminData?.let {
+                    AdminData(
+                        accessLevel = when (it.accessLevel.uppercase()) {
+                            "SUPER_ADMIN" -> AdminAccessLevel.SUPER_ADMIN
+                            "MANAGER" -> AdminAccessLevel.MANAGER
+                            else -> AdminAccessLevel.BASIC
+                        }
+                    )
+                } ?: AdminData(
+                    accessLevel = AdminAccessLevel.BASIC
+                )
+            )
+
+            // Default to a basic user if role doesn't match
+            else -> User(
+                id = id,
+                name = fullName,
+                email = email,
+                phone = phoneNumber ?: "",
+                avatarUrl = avatarUrl,
+                role = UserRole.CLIENT,
+                status = UserStatus.ACTIVE
+            )
+        }
     }
 
     fun TokenResponse.toDomain(): AuthTokens {

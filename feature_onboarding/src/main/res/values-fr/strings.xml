@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Titres de l'onboarding -->
-    <string name="onboard_title_1">Bienvenue dans DroidKotlin</string>
-    <string name="onboard_title_2">Développement rapide et efficace</string>
-    <string name="onboard_title_3">Connexion simplifiée à vos services</string>
-    <string name="onboard_title_4">Personnalisez votre interface facilement</string>
-    <string name="onboard_title_5">Prêt à coder ?</string>
+    <!-- Onboarding Titles -->
+    <string name="onboard_title_1">Bienvenue sur Luminotif</string>
+    <string name="onboard_title_2">Gérez vos factures facilement</string>
+    <string name="onboard_title_3">Demandez des services instantanément</string>
+    <string name="onboard_title_4">Suivez votre consommation</string>
+    <string name="onboard_title_5">Prêt à commencer ?</string>
 
-    <!-- Descriptions de l'onboarding -->
-    <string name="onboard_description_1">Lancez rapidement vos projets Android avec DroidKotlin, une base robuste et évolutive pour un développement moderne.</string>
-    <string name="onboard_description_2">Profitez d\'une architecture optimisée pour créer des applications performantes et évolutives.</string>
-    <string name="onboard_description_3">DroidKotlin est prêt à se connecter à vos API REST, gérer les données et les états efficacement.</string>
-    <string name="onboard_description_4">Utilisez des composants réutilisables pour personnaliser le design selon vos besoins.</string>
-    <string name="onboard_description_5">Vous êtes prêt à démarrer ! Lancez votre premier projet avec DroidKotlin et développez comme un pro.</string>
+    <!-- Onboarding Descriptions -->
+    <string name="onboard_description_1">Votre solution tout-en-un pour la gestion de l\'électricité, les demandes de service et le suivi de consommation.</string>
+    <string name="onboard_description_2">Consultez, payez et suivez vos factures d\'électricité en temps réel avec notre système de paiement simple et sécurisé.</string>
+    <string name="onboard_description_3">Signalez des problèmes, demandez des services et suivez leur statut - le tout depuis votre smartphone.</string>
+    <string name="onboard_description_4">Surveillez votre consommation d\'énergie, visualisez les tendances et obtenez des conseils pour réduire vos factures.</string>
+    <string name="onboard_description_5">Vous êtes prêt ! Connectez-vous ou créez un compte pour commencer à gérer efficacement vos services d\'électricité.</string>
 
     <string name="skip">Passer</string>
     <string name="next">Suivant</string>

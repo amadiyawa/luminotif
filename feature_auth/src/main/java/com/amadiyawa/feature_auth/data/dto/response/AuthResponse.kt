@@ -16,33 +16,66 @@ data class AuthResponse(
     val metadata: Map<String, String>? = null
 )
 
-fun AuthResponse.Companion.random(): AuthResponse {
+fun AuthResponse.Companion.random(userRole: String = "CLIENT"): AuthResponse {
     val randomId = Random.nextInt(1000, 9999).toString()
-    val currentTime = System.currentTimeMillis()
 
-    return AuthResponse(
-        user = UserResponse(
+    // Generate random user data based on role
+    val user = when (userRole.uppercase()) {
+        "CLIENT" -> UserResponse(
             id = randomId,
             fullName = "Amadou Iyawa",
-            username = "amadiyawa",
-            email = "me@amadiyawa.com",
+            email = "client@luminotif.com",
             phoneNumber = "+237699182482",
-            avatarUrl = "https://avatars.githubusercontent.com/u/31802381?s=400&u=59fb0139c6b89f16aa9b04e96483eedf11df0796&v=4",
-            isEmailVerified = Random.nextBoolean(),
-            isPhoneVerified = Random.nextBoolean(),
-            roles = setOf("USER").takeIf { Random.nextBoolean() } ?: setOf("USER", "ADMIN"),
-            lastLoginAt = Random.nextLong(100000, 1000000),
-            isActive = Random.nextBoolean(),
-            timezone = "UTC+1",
-            locale = "en-US",
-            createdAt = currentTime - Random.nextLong(100000, 1000000),
-            updatedAt = currentTime,
-            providerData = mapOf(
-                "Google" to "google_$randomId",
-                "Facebook" to "facebook_$randomId",
-                "Github" to "github_$randomId"
-            ).takeIf { Random.nextBoolean() }
-        ),
+            avatarUrl = "https://avatars.githubusercontent.com/u/31802381?v=4",
+            role = "CLIENT",
+            clientData = ClientData(
+                accountNumber = "ENEO-${Random.nextInt(10000, 99999)}",
+                meterNumber = "MTR-${Random.nextInt(100000, 999999)}",
+                area = "Yaoundé Central",
+                address = "123 Main Street, Yaoundé"
+            )
+        )
+        "AGENT" -> UserResponse(
+            id = randomId,
+            fullName = "Issa Tika",
+            email = "agent@luminotif.com",
+            phoneNumber = "+237612345678",
+            avatarUrl = null,
+            role = "AGENT",
+            agentData = AgentData(
+                employeeId = "EMP-${Random.nextInt(1000, 9999)}",
+                territories = listOf("Yaoundé Central", "Yaoundé North")
+            )
+        )
+        "ADMIN" -> UserResponse(
+            id = randomId,
+            fullName = "Admin User",
+            email = "admin@luminotif.com",
+            phoneNumber = "+237687654321",
+            avatarUrl = null,
+            role = "ADMIN",
+            adminData = AdminData(
+                accessLevel = listOf("BASIC", "MANAGER", "SUPER_ADMIN").random()
+            )
+        )
+        else -> UserResponse(
+            id = randomId,
+            fullName = "Default User",
+            email = "user@luminotif.com",
+            phoneNumber = "+237600000000",
+            avatarUrl = null,
+            role = "CLIENT",
+            clientData = ClientData(
+                accountNumber = "ENEO-${Random.nextInt(10000, 99999)}",
+                meterNumber = "MTR-${Random.nextInt(100000, 999999)}",
+                area = "Yaoundé Central",
+                address = "123 Main Street, Yaoundé"
+            )
+        )
+    }
+
+    return AuthResponse(
+        user = user,
         tokens = TokenResponse(
             accessToken = "token_$randomId",
             refreshToken = "refresh_$randomId".takeIf { Random.nextBoolean() },

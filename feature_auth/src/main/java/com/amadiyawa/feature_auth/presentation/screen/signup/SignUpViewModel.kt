@@ -81,7 +81,7 @@ internal class SignUpViewModel(
             delay(2000) // simulate API call
             val data = VerificationResponse.random(OtpPurpose.SIGN_UP.name).toDomain()
             data.purpose = OtpPurpose.SIGN_UP
-            _uiEvent.emit(SignUpUiEvent.NavigateToOtp(data))
+            _uiEvent.emit(SignUpUiEvent.NavigateToMainScreen)
             _isSubmitting.value = false
         }
     }
