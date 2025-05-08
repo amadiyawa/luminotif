@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
@@ -22,8 +19,7 @@ import com.amadiyawa.feature_base.presentation.navigation.AppState
 import com.amadiyawa.feature_base.presentation.navigation.CustomBottomBar
 import com.amadiyawa.feature_base.presentation.navigation.CustomNavRail
 import com.amadiyawa.feature_base.presentation.navigation.DestinationPlacement
-import com.amadiyawa.feature_base.presentation.navigation.NewDynamicDestinationRegistry
-import org.koin.compose.koinInject
+import com.amadiyawa.feature_base.presentation.navigation.NavigationDestination
 import timber.log.Timber
 
 /**
@@ -41,37 +37,26 @@ import timber.log.Timber
 @Composable
 fun AppScaffoldNavigation(
     appState: AppState,
-    currentDestination: NavDestination?,
+    navigationDestinations: List<NavigationDestination>,
     content: @Composable () -> Unit
 ) {
-    // Get destinations from appState
-    val destinations = appState.getDestinations()
+    val currentDestination = appState.currentDestination
 
-    // val destinations = remember { DynamicDestinationRegistry.destinations }
-
-    // Debug log
-    Timber.d("Total destinations: ${destinations.size}")
-    destinations.forEach {
-        Timber.d("Destination: ${it.route}, Placement: ${it.placement}")
+    // Debug logs for scaffold setup
+    val bottomBarDestinations = navigationDestinations.filter {
+        it.placement == DestinationPlacement.BottomBar
     }
 
-    val bottomBarDestinations = remember(destinations) {
-        destinations.filter { it.placement == DestinationPlacement.BottomBar }
-    }
+    // Get the value of shouldShowBottomBar before using it
+    val shouldShowBottomBar = appState.shouldShowBottomBar
 
-    // Debug log
-    Timber.d("Bottom bar destinations: ${bottomBarDestinations.size}")
-
-    // Debug condition checks
-    val shouldShowBottomBar = bottomBarDestinations.isNotEmpty() && appState.shouldShowBottomBar
-    Timber.d("Should show bottom bar: $shouldShowBottomBar")
-    Timber.d("Has bottom destinations: ${bottomBarDestinations.isNotEmpty()}")
-    Timber.d("appState.shouldShowBottomBar: ${appState.shouldShowBottomBar}")
-    Timber.d("Current destination: ${currentDestination?.route}")
-
-    val navRailDestinations = remember(destinations) {
-        destinations.filter { it.placement == DestinationPlacement.NavRail }
-    }
+    // Enhanced debug logging
+    Timber.d("AppScaffoldNavigation setup:")
+    Timber.d("- Bottom bar destinations: ${bottomBarDestinations.size}")
+    Timber.d("- Current route: ${currentDestination?.route}")
+    Timber.d("- shouldUseNavRail: ${appState.shouldUseNavRail}")
+    Timber.d("- isInMainGraph: ${appState.isInMainGraph.value}")
+    Timber.d("- shouldShowBottomBar: $shouldShowBottomBar")
 
     Scaffold(
         modifier = Modifier
@@ -80,12 +65,16 @@ fun AppScaffoldNavigation(
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onBackground,
         bottomBar = {
-            if (bottomBarDestinations.isNotEmpty() && appState.shouldShowBottomBar) {
+            // Only show bottom bar if there are destinations to show
+            if (bottomBarDestinations.isNotEmpty() && shouldShowBottomBar) {
+                Timber.d("✅ Showing bottom bar with ${bottomBarDestinations.size} destinations")
                 CustomBottomBar(
                     destinations = bottomBarDestinations,
                     currentDestination = currentDestination,
-                    onNavigate = { appState.navigate(it) }
+                    onNavigate = { route -> appState.navigate(route) }
                 )
+            } else {
+                Timber.d("❌ Not showing bottom bar: hasDestinations=${bottomBarDestinations.isNotEmpty()}, shouldShow=$shouldShowBottomBar")
             }
         }
     ) { innerPadding ->
@@ -94,11 +83,19 @@ fun AppScaffoldNavigation(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            if (navRailDestinations.isNotEmpty() && appState.shouldShowNavRail) {
+            val navRailDestinations = navigationDestinations.filter {
+                it.placement == DestinationPlacement.NavRail
+            }
+
+            val shouldShowNavRail = appState.shouldShowNavRail
+
+            // Only show nav rail if there are destinations to show
+            if (navRailDestinations.isNotEmpty() && shouldShowNavRail) {
+                Timber.d("Showing nav rail with ${navRailDestinations.size} destinations")
                 CustomNavRail(
                     destinations = navRailDestinations,
                     currentDestination = currentDestination,
-                    onNavigate = { appState.navigate(it) },
+                    onNavigate = { route -> appState.navigate(route) },
                     modifier = Modifier.width(72.dp)
                 )
             }

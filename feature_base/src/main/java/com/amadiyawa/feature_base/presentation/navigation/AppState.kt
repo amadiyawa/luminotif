@@ -15,7 +15,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.compose.koinInject
+import timber.log.Timber
 
 /**
  * Represents the state of the application, including navigation, window size, and coroutine scope.
@@ -31,45 +33,40 @@ import org.koin.compose.koinInject
 class AppState(
     val navController: NavHostController,
     val windowSizeClass: WindowSizeClass,
-    val coroutineScope: CoroutineScope,
-    val destinationRegistry: NewDynamicDestinationRegistry
+    val coroutineScope: CoroutineScope
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
-    @Composable
-    fun getDestinations(): List<NavDestinationContract> {
-        val destinations by destinationRegistry.destinations.collectAsState()
-        return destinations
-    }
-
-    @Composable
-    private fun isVisibleExactly(placement: DestinationPlacement): Boolean {
-        val currentRoute = currentDestination?.route
-        val destinations = getDestinations()
-        return destinations.any {
-            it.placement == placement && (it.route == currentRoute || it.destination == currentRoute)
-        }
-    }
-
     val shouldUseNavRail: Boolean
         get() = windowSizeClass.widthSizeClass >= WindowWidthSizeClass.Medium
 
+    // Tracks whether we're in the main part of the app where navigation should be shown
+    val isInMainGraph = MutableStateFlow(false)
+
     val shouldShowBottomBar: Boolean
-        @Composable get() = !shouldShowNavRail && isVisibleExactly(DestinationPlacement.BottomBar)
+        @Composable get() = !shouldUseNavRail && isInMainGraph.collectAsState().value
 
     val shouldShowNavRail: Boolean
-        @Composable get() = shouldUseNavRail && isVisibleExactly(DestinationPlacement.NavRail)
+        @Composable get() = shouldUseNavRail && isInMainGraph.collectAsState().value
 
-    fun navigate(destination: NavDestinationContract, route: String? = null) {
-        trace("Navigation: ${destination.route}") {
-            navController.navigate(route ?: destination.route) {
+    fun setInMainGraph(inMain: Boolean) {
+        isInMainGraph.value = inMain
+    }
+
+    // In AppState.kt
+    fun navigate(route: String) {
+        try {
+            Timber.d("Navigating to $route")
+            navController.navigate(route) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
                 launchSingleTop = true
                 restoreState = true
             }
+        } catch (e: Exception) {
+            Timber.e(e, "Navigation error: $route")
         }
     }
 
@@ -94,10 +91,9 @@ class AppState(
 fun rememberAppState(
     navController: NavHostController = rememberNavController(),
     windowSizeClass: WindowSizeClass,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    destinationRegistry: NewDynamicDestinationRegistry = koinInject()
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): AppState {
     return remember(navController, windowSizeClass, coroutineScope) {
-        AppState(navController, windowSizeClass, coroutineScope, destinationRegistry)
+        AppState(navController, windowSizeClass, coroutineScope)
     }
 }

@@ -1,20 +1,12 @@
 package com.amadiyawa.feature_auth.presentation.navigation
 
-import android.net.Uri
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.amadiyawa.feature_auth.domain.model.VerificationResult
-import com.amadiyawa.feature_auth.presentation.screen.forgotpassword.ForgotPasswordScreen
-import com.amadiyawa.feature_auth.presentation.screen.otpverification.OtpVerificationScreen
-import com.amadiyawa.feature_auth.presentation.screen.resetpassword.ResetPasswordScreen
 import com.amadiyawa.feature_auth.presentation.screen.signin.SignInScreen
 import com.amadiyawa.feature_auth.presentation.screen.signup.SignUpScreen
 import com.amadiyawa.feature_auth.presentation.screen.welcome.WelcomeScreen
-import kotlinx.serialization.json.Json
 
 internal data class AuthGraphCallbacks(
     val onSignIn: () -> Unit,

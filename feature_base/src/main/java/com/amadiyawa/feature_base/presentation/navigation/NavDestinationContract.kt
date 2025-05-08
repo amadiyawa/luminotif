@@ -42,4 +42,7 @@ interface NavDestinationContract {
      * If empty, all roles have access.
      */
     val allowedRoles: Set<UserRole> get() = setOf(UserRole.CLIENT, UserRole.AGENT, UserRole.ADMIN)
+
+    // Optional: Add order property with default implementation
+    val order: Int get() = Int.MAX_VALUE
 }
