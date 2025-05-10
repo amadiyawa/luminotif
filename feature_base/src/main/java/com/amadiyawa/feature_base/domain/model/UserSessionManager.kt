@@ -36,6 +36,12 @@ class UserSessionManager(
     // Public immutable state flow that can be observed
     val currentRole: StateFlow<UserRole?> = _currentRole.asStateFlow()
 
+    // Private mutable state flow to store the current user ID
+    private val _currentUserId = MutableStateFlow<String?>(null)
+
+    // Public immutable state flow that can be observed
+    val currentUserId: StateFlow<String?> = _currentUserId.asStateFlow()
+
     init {
         // Observe session changes
         observeSession()
@@ -45,33 +51,36 @@ class UserSessionManager(
      * Initializes the UserSessionManager by loading the current user data
      */
     suspend fun initialize() {
-        refreshUserRole()
+        refreshUserData()
     }
 
     /**
-     * Extracts and refreshes the user role from persistent storage
+     * Extracts and refreshes the user data from persistent storage
      */
-    private suspend fun refreshUserRole() = withContext(Dispatchers.Default) {
+    private suspend fun refreshUserData() = withContext(Dispatchers.Default) {
         val userJsonResult = sessionRepository.getSessionUserJson()
 
         if (userJsonResult is OperationResult.Success && userJsonResult.data != null) {
             try {
-                extractRoleFromJson(userJsonResult.data)?.let { role ->
-                    _currentRole.value = role
-                }
+                val parsedData = extractUserDataFromJson(userJsonResult.data)
+                _currentRole.value = parsedData.first
+                _currentUserId.value = parsedData.second
             } catch (e: Exception) {
                 Timber.e(e, "Error parsing user JSON")
                 _currentRole.value = null
+                _currentUserId.value = null
             }
         } else {
             _currentRole.value = null
+            _currentUserId.value = null
         }
     }
 
     /**
-     * Extracts the user role from the stored JSON string
+     * Extracts the user role and ID from the stored JSON string
+     * @return Pair of (UserRole?, userId?)
      */
-    private fun extractRoleFromJson(userJson: String): UserRole? {
+    private fun extractUserDataFromJson(userJson: String): Pair<UserRole?, String?> {
         return try {
             val jsonElement = json.parseToJsonElement(userJson)
             val authResult = jsonElement.jsonObject
@@ -81,12 +90,15 @@ class UserSessionManager(
 
             // Extract role from user object
             val roleString = userObject?.get("role")?.jsonPrimitive?.content
+            val role = mapStringToUserRole(roleString)
 
-            // Map string to enum
-            mapStringToUserRole(roleString)
+            // Extract ID from user object
+            val userId = userObject?.get("id")?.jsonPrimitive?.content
+
+            Pair(role, userId)
         } catch (e: Exception) {
-            Timber.e(e, "Error extracting role from JSON")
-            null
+            Timber.e(e, "Error extracting user data from JSON")
+            Pair(null, null)
         }
     }
 
@@ -113,8 +125,9 @@ class UserSessionManager(
             .onEach { isActive ->
                 if (!isActive) {
                     _currentRole.value = null
-                } else if (_currentRole.value == null) {
-                    refreshUserRole()
+                    _currentUserId.value = null
+                } else if (_currentRole.value == null || _currentUserId.value == null) {
+                    refreshUserData()
                 }
             }
             .launchIn(scope)
@@ -127,6 +140,16 @@ class UserSessionManager(
     fun observeUserRole(): Flow<UserRole?> {
         return sessionRepository.isSessionActive().combine(currentRole) { isActive, role ->
             if (isActive) role else null
+        }
+    }
+
+    /**
+     * Gets the user ID as a Flow, re-evaluated each time
+     * the session changes
+     */
+    fun observeUserId(): Flow<String?> {
+        return sessionRepository.isSessionActive().combine(currentUserId) { isActive, userId ->
+            if (isActive) userId else null
         }
     }
 

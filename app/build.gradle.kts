@@ -24,7 +24,7 @@ android {
 
         versionCode = 1
         versionName = "0.0.1" // SemVer (Major.Minor.Patch)
-        minSdk = 24
+        minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled = true

@@ -5,7 +5,9 @@ import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.outlined.Receipt
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.amadiyawa.feature_base.domain.util.UserRole
 import com.amadiyawa.feature_base.presentation.navigation.DestinationPlacement
@@ -37,20 +39,26 @@ class InvoiceNavigationApi : FeatureNavigationApi {
                 Timber.d("Rendering InvoiceListScreen")
                 InvoiceListScreen(
                     onInvoiceClick = { invoiceId ->
-                        navController.navigate("${Routes.INVOICE_DETAIL}/$invoiceId")
+                        navController.navigate(Routes.detailRoute(invoiceId))
                     }
                 )
             }
 
-            composable("${Routes.INVOICE_DETAIL}/{invoiceId}") { backStackEntry ->
-                val invoiceId = backStackEntry.arguments?.getString("invoiceId")
-                Timber.d("Rendering InvoiceDetailScreen with ID: $invoiceId")
-                invoiceId?.let {
-                    InvoiceDetailScreen(
-                        invoiceId = it,
-                        onBackClick = { navController.popBackStack() }
-                    )
-                }
+            composable(
+                route = "${Routes.INVOICE_DETAIL}/{${Routes.DETAIL_ID_ARG}}",
+                arguments = listOf(
+                    navArgument(Routes.DETAIL_ID_ARG) {
+                        type = NavType.StringType
+                    }
+                )
+            ) {backStackEntry ->
+                val invoiceId = backStackEntry.arguments?.getString(Routes.DETAIL_ID_ARG)
+                    ?: return@composable
+
+                InvoiceDetailScreen(
+                    invoiceId = invoiceId,
+                    onBackClick = { navController.popBackStack() }
+                )
             }
         }
 
@@ -75,5 +83,8 @@ class InvoiceNavigationApi : FeatureNavigationApi {
         const val INVOICE_GRAPH = "invoice_graph"
         const val INVOICE_LIST = "invoice_list"
         const val INVOICE_DETAIL = "invoice_detail"
+        const val DETAIL_ID_ARG = "billId"
+
+        fun detailRoute(billId: String) = "$INVOICE_DETAIL/$billId"
     }
 }

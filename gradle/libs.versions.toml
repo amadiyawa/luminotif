@@ -10,7 +10,7 @@ kotlinSymbolProcessing = "2.0.21-1.0.28"
 kotlinCompilerExtensionVersion = "1.5.14"
 
 compileSdk = "35"
-minSdk = "24"
+minSdk = "26"
 
 coroutines = "1.8.1"
 retrofit = "2.11.0"

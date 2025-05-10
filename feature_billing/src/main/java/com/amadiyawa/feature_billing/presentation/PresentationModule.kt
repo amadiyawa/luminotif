@@ -3,6 +3,8 @@ package com.amadiyawa.feature_billing.presentation
 import com.amadiyawa.feature_base.presentation.navigation.FeatureNavigationApi
 import com.amadiyawa.feature_base.presentation.navigation.NavigationRegistry
 import com.amadiyawa.feature_billing.presentation.navigation.InvoiceNavigationApi
+import com.amadiyawa.feature_billing.presentation.viewmodel.InvoiceViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -27,5 +29,17 @@ internal val presentationModule = module {
 
         // Return a dummy value to satisfy Koin
         true
+    }
+
+    // ViewModel
+    viewModel {
+        InvoiceViewModel(
+            getBillsUseCase = get(),
+            getBillByIdUseCase = get(),
+            getPaymentsForBillUseCase = get(),
+            generatePaymentUseCase = get(),
+            updateBillStatusUseCase = get(),
+            refreshInvoiceDataUseCase = get()
+        )
     }
 }
