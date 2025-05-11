@@ -87,4 +87,7 @@
     <string name="otp_length_error">Le code OTP doit contenir 6 chiffres</string>
     <string name="otp_mismatch">Les codes ne correspondent pas</string>
     <string name="invalid_otp">Code de vérification invalide</string>
+
+    <string name="error">Erreur</string>
+    <string name="retry">Réessayer</string>
 </resources>

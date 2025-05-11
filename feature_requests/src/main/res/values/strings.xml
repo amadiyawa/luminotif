@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_requests">Service Requests</string>
+    <string name="create_request">Create Request</string>
+    <string name="request_details">Request Details</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="category">Category</string>
+    <string name="priority">Priority</string>
+    <string name="status">Status</string>
+    <string name="submit_request">Submit Request</string>
+    <string name="update_status">Update Status</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="request_history">Request History</string>
+    <string name="assigned_agent">Assigned Agent</string>
+    <string name="created_on">Created on</string>
+    <string name="updated_on">Updated on</string>
+
+    <!-- Categories -->
+    <string name="connection_issue">Connection Issue</string>
+    <string name="billing_query">Billing Query</string>
+    <string name="meter_problem">Meter Problem</string>
+    <string name="power_outage">Power Outage</string>
+    <string name="other">Other</string>
+
+    <!-- Priorities -->
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="urgent">Urgent</string>
+
+    <!-- Statuses -->
+    <string name="pending">Pending</string>
+    <string name="assigned">Assigned</string>
+    <string name="in_progress">In Progress</string>
+    <string name="resolved">Resolved</string>
+    <string name="closed">Closed</string>
+    <string name="cancelled">Cancelled</string>
+
+    <string name="no_requests_found">No requests found</string>
+    <string name="no_requests_help">Create a new request to get started</string>
+
+    <!-- Detail Screen -->
+    <string name="request_id">Request ID</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="select_new_status">Select new status:</string>
+    <string name="comment_placeholder">Enter your comment here...</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+</resources>

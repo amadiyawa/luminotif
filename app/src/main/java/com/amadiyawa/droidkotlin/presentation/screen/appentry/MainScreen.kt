@@ -32,6 +32,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.amadiyawa.feature_base.presentation.navigation.DestinationPlacement
+import com.amadiyawa.feature_billing.presentation.navigation.InvoiceNavigationApi
+import com.amadiyawa.feature_requests.presentation.navigation.ServiceRequestNavigationApi
+import com.amadiyawa.feature_users.presentation.navigation.UserNavigationApi
 
 /**
  * MainScreen is a composable function that represents the main screen of the application.
@@ -100,10 +103,9 @@ fun MainScreen(
 
             // These are the routes that are part of the main section
             val mainSectionRoutes = listOf(
-                "invoice_list",
-                "user_list",
-                "invoice_detail",
-                "user_detail",
+                InvoiceNavigationApi.Routes.INVOICE_LIST,
+                ServiceRequestNavigationApi.Routes.SERVICE_REQUEST_LIST,
+                UserNavigationApi.Routes.USER_LIST,
                 "fallback"
             )
 

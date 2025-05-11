@@ -80,6 +80,7 @@ dependencies {
     implementation(projects.featureAuth)
     implementation(projects.featureUser)
     implementation(projects.featureBilling)
+    implementation(projects.featureRequests)
 }
 
 /**

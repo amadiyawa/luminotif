@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_requests">Demandes</string>
+    <string name="create_request">Créer une demande</string>
+    <string name="request_details">Détails de la demande</string>
+    <string name="title">Titre</string>
+    <string name="description">Description</string>
+    <string name="category">Catégorie</string>
+    <string name="priority">Priorité</string>
+    <string name="status">Statut</string>
+    <string name="submit_request">Soumettre la demande</string>
+    <string name="update_status">Mettre à jour le statut</string>
+    <string name="add_comment">Ajouter un commentaire</string>
+    <string name="request_history">Historique de la demande</string>
+    <string name="assigned_agent">Agent assigné</string>
+    <string name="created_on">Créé le</string>
+    <string name="updated_on">Mis à jour le</string>
+
+    <!-- Categories -->
+    <string name="connection_issue">Problème de connexion</string>
+    <string name="billing_query">Question de facturation</string>
+    <string name="meter_problem">Problème de compteur</string>
+    <string name="power_outage">Panne de courant</string>
+    <string name="other">Autre</string>
+
+    <!-- Priorities -->
+    <string name="low">Basse</string>
+    <string name="medium">Moyenne</string>
+    <string name="high">Haute</string>
+    <string name="urgent">Urgente</string>
+
+    <!-- Statuses -->
+    <string name="pending">En attente</string>
+    <string name="assigned">Assignée</string>
+    <string name="in_progress">En cours</string>
+    <string name="resolved">Résolue</string>
+    <string name="closed">Fermée</string>
+    <string name="cancelled">Annulée</string>
+
+    <string name="no_requests_found">Aucune demande trouvée</string>
+    <string name="no_requests_help">Créez une nouvelle demande pour commencer</string>
+
+    <!-- Detail Screen -->
+    <string name="request_id">ID de la demande</string>
+    <string name="cancel_request">Annuler la demande</string>
+    <string name="select_new_status">Sélectionner le nouveau statut :</string>
+    <string name="comment_placeholder">Entrez votre commentaire ici…</string>
+    <string name="confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
+</resources>

@@ -157,6 +157,7 @@ fun TextBodyMedium(
     textDecoration: TextDecoration = TextDecoration.None,
     fontWeight: FontWeight = FontWeight.Normal,
     fontSize: TextUnit = TextUnit.Unspecified,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -167,6 +168,7 @@ fun TextBodyMedium(
         textDecoration = textDecoration,
         fontWeight = fontWeight,
         fontSize = fontSize,
+        maxLines = maxLines,
     )
 }
 

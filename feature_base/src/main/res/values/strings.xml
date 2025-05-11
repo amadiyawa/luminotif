@@ -85,4 +85,7 @@
     <string name="otp_length_error">OTP must be 6 digits</string>
     <string name="otp_mismatch">Codes don\'t match</string>
     <string name="invalid_otp">Invalid verification code</string>
+
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
 </resources>

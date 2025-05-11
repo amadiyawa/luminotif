@@ -6,6 +6,7 @@ import com.amadiyawa.feature_base.featureBaseModule
 import com.amadiyawa.feature_base.presentation.navigation.NavigationRegistry
 import com.amadiyawa.feature_billing.featureBillingModule
 import com.amadiyawa.feature_onboarding.featureOnboardingModule
+import com.amadiyawa.feature_requests.featureRequestsModule
 import com.amadiyawa.feature_users.featureUserModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -38,6 +39,7 @@ class MyApplication: Application() {
             modules(featureOnboardingModule)
             modules(featureAuthModule)
             modules(featureBillingModule)
+            modules(featureRequestsModule)
             modules(featureUserModule)
         }
 
@@ -52,6 +54,13 @@ class MyApplication: Application() {
                 Timber.d("Invoice feature registered successfully")
             } catch (e: Exception) {
                 Timber.e(e, "Failed to register invoice feature")
+            }
+
+            try {
+                koin.get<Boolean>(named("serviceRequestFeatureRegistration"))
+                Timber.d("Service request feature registered successfully")
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to register service request feature")
             }
 
             try {

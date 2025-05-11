@@ -22,7 +22,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -54,6 +53,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amadiyawa.feature_base.presentation.compose.composable.ButtonIconType
 import com.amadiyawa.feature_base.presentation.compose.composable.CircularButton
 import com.amadiyawa.feature_base.presentation.compose.composable.CircularButtonParams
+import com.amadiyawa.feature_base.presentation.compose.composable.EmptyScreen
+import com.amadiyawa.feature_base.presentation.compose.composable.ErrorScreen
 import com.amadiyawa.feature_base.presentation.compose.composable.LoadingAnimation
 import com.amadiyawa.feature_base.presentation.compose.composable.TextBodyMedium
 import com.amadiyawa.feature_base.presentation.compose.composable.TextBodySmall
@@ -202,7 +203,10 @@ fun InvoiceListScreen(
                     }
 
                     uiState.filteredBills.isEmpty() -> {
-                        EmptyScreen()
+                        EmptyScreen(
+                            title = stringResource(R.string.no_bills_found),
+                            message = stringResource(R.string.no_bills_help)
+                        )
                     }
 
                     else -> {
@@ -558,61 +562,5 @@ private fun getSortLabel(sort: SortOrder): String {
         SortOrder.DATE_DESC -> stringResource(R.string.sort_date_desc)
         SortOrder.AMOUNT_ASC -> stringResource(R.string.sort_amount_asc)
         SortOrder.AMOUNT_DESC -> stringResource(R.string.sort_amount_desc)
-    }
-}
-
-@Composable
-private fun EmptyScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.no_bills_found),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(R.string.no_bills_help),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-@Composable
-private fun ErrorScreen(
-    error: String,
-    onRetry: () -> Unit
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.error),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.error
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = error,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onRetry) {
-                Text(stringResource(R.string.retry))
-            }
-        }
     }
 }

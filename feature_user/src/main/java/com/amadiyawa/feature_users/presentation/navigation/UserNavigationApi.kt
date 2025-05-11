@@ -62,7 +62,7 @@ class UserNavigationApi : FeatureNavigationApi {
                 selectedIcon = Icons.Filled.People,
                 unselectedIcon = Icons.Outlined.People,
                 placement = DestinationPlacement.BottomBar,
-                order = 2 // Second position in bottom bar, after Invoice
+                order = 3 // Second position in bottom bar, after Invoice
             )
         )
     }
