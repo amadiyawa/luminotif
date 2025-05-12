@@ -2,9 +2,11 @@ package com.amadiyawa.feature_auth.presentation.screen.signin
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,6 +34,7 @@ import com.amadiyawa.feature_base.presentation.compose.composable.LoadingButtonP
 import com.amadiyawa.feature_base.presentation.compose.composable.TextFieldConfig
 import com.amadiyawa.feature_base.presentation.compose.composable.TextFieldText
 import com.amadiyawa.feature_base.presentation.compose.composable.TrailingIconConfig
+import com.amadiyawa.feature_base.presentation.theme.dimension
 import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
@@ -164,7 +167,7 @@ internal fun SignInFormUI(
             params = LoadingButtonParams(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .requiredHeight(Dimen.Size.extraLarge),
+                    .height(MaterialTheme.dimension.componentSize.buttonLarge),
                 enabled = isFormValid,
                 text = when (uiState) {
                     is SignInUiState.Loading.Authentication ->

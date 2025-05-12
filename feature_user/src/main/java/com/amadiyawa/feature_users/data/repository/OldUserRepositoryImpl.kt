@@ -3,19 +3,19 @@ package com.amadiyawa.feature_users.data.repository
 import com.amadiyawa.feature_base.data.retrofit.ApiResult
 import com.amadiyawa.feature_users.data.datasource.api.service.UserRetrofitService
 import com.amadiyawa.feature_users.data.datasource.database.UserDao
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import com.amadiyawa.feature_base.domain.result.OperationResult
 import com.amadiyawa.feature_users.data.datasource.api.model.toDomainModel
 import com.amadiyawa.feature_users.data.datasource.api.model.toEntityModel
 import com.amadiyawa.feature_users.data.datasource.database.model.toDomainModel
-import com.amadiyawa.feature_users.domain.repository.UserRepository
+import com.amadiyawa.feature_users.domain.repository.OldUserRepository
 import timber.log.Timber
 
-internal class UserRepositoryImpl(
+internal class OldUserRepositoryImpl(
     private val userRetrofitService: UserRetrofitService,
     private val userDao: UserDao
-) : UserRepository {
-    override suspend fun getUsers(page: Int, results: Int): OperationResult<List<User>> =
+) : OldUserRepository {
+    override suspend fun getUsers(page: Int, results: Int): OperationResult<List<OldUser>> =
         when (val apiResult = userRetrofitService.getUserListAsync(page, results)) {
             is ApiResult.Success -> {
                 val users = apiResult
@@ -47,7 +47,7 @@ internal class UserRepositoryImpl(
             }
         }
 
-    override suspend fun getUserByUuid(uuid: String): OperationResult<User> =
+    override suspend fun getUserByUuid(uuid: String): OperationResult<OldUser> =
         try {
             val user = userDao
                 .getUserByUuid(uuid)

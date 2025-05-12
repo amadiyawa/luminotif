@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -61,28 +62,33 @@ fun LoadingButton(
     Button(
         modifier = params.modifier
             .fillMaxWidth()
-            .requiredHeight(MaterialTheme.dimension.componentSize.inputField),
+            .requiredHeight(MaterialTheme.dimension.componentSize.buttonLarge),
         onClick = params.onClick,
         enabled = params.enabled && !params.isLoading,
         colors = colors
     ) {
-        Row(
+        Box(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            contentAlignment = Alignment.Center
         ) {
-            AnimatedVisibility(
-                visible = params.isLoading,
-                enter = fadeIn() + expandHorizontally(),
-                exit = fadeOut() + shrinkHorizontally()
+            Row(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                DefaultCircularProgressIndicator()
+                AnimatedVisibility(
+                    visible = params.isLoading,
+                    enter = fadeIn() + expandHorizontally(),
+                    exit = fadeOut() + shrinkHorizontally()
+                ) {
+                    DefaultCircularProgressIndicator()
+                }
+                TextLabelLarge(
+                    text = params.text,
+                    fontWeight = FontWeight.Medium,
+                    color = LocalContentColor.current
+                )
             }
-            TextLabelLarge(
-                text = params.text,
-                fontWeight = FontWeight.Medium,
-                color = LocalContentColor.current
-            )
         }
     }
 }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="users">Users</string>
     <string name="empty_toolbar_title">\"\"</string>
-    <string name="back">Back</string>
     <string name="location">Location</string>
     <string name="city">City</string>
     <string name="state">State</string>
@@ -23,4 +21,106 @@
     <string name="street">Street</string>
     <string name="timezone">Timezone</string>
     <string name="coordinates">Coordinates</string>
+
+    <!-- User Module Strings -->
+    <string name="users">Users</string>
+    <string name="clients">Clients</string>
+    <string name="agents">Agents</string>
+    <string name="user_management">User Management</string>
+    <string name="client_management">Client Management</string>
+    <string name="agent_management">Agent Management</string>
+    <string name="manage_clients_description">View and manage client information</string>
+    <string name="manage_agents_description">View and manage field agents</string>
+    <string name="refresh">Refresh</string>
+    <string name="error_loading_data">Error Loading Data</string>
+    <string name="retry">Retry</string>
+
+    <!-- Statistics Labels -->
+    <string name="system_statistics">System Statistics</string>
+    <string name="total_clients">Total Clients</string>
+    <string name="active_clients">Active Clients</string>
+    <string name="total_agents">Total Agents</string>
+    <string name="active_agents">Active Agents</string>
+    <string name="recent_registrations">Recent Registrations</string>
+    <string name="clients_by_area">Clients By Area</string>
+
+    <!-- Client List Screen Strings -->
+    <string name="search_clients">Search clients…</string>
+    <string name="filter_clients">Filter Clients</string>
+    <string name="select_area">Select Area</string>
+    <string name="all_areas">All Areas</string>
+    <string name="close">Close</string>
+    <string name="add_client">Add Client</string>
+    <string name="back">Back</string>
+    <string name="filter">Filter</string>
+    <string name="error_loading_clients">Error Loading Clients</string>
+    <string name="no_clients_found">No Clients Found</string>
+    <string name="try_adjusting_filters">Try adjusting your search or filters</string>
+    <string name="no_clients_in_system">No clients are currently in the system</string>
+
+    <!-- Status Labels -->
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
+    <string name="suspended">Suspended</string>
+    <string name="pending">Pending</string>
+
+    <!-- User Dashboard Strings -->
+    <string name="welcome_format">Welcome, %1$s</string>
+    <string name="role_format">Role: %1$s</string>
+    <string name="admin_role">Administrator</string>
+    <string name="agent_role">Field Agent</string>
+    <string name="client_role">Client</string>
+    <string name="unknown_role">Unknown</string>
+
+    <!-- Common strings -->
+    <string name="create_user">Create User</string>
+    <string name="creating">Creating…</string>
+    <string name="reset_form">Reset Form</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
+
+    <!-- Section titles -->
+    <string name="basic_information">Basic Information</string>
+    <string name="client_information">Client Information</string>
+    <string name="agent_information">Agent Information</string>
+    <string name="assigned_territories">Assigned Territories</string>
+
+    <!-- Form labels -->
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="status">Status</string>
+    <string name="address">Address</string>
+    <string name="area">Area</string>
+    <string name="meter_number">Meter Number</string>
+    <string name="account_number">Account Number</string>
+    <string name="employee_id">Employee ID</string>
+    <string name="select_territories">Select Territories</string>
+
+    <!-- Screen titles -->
+    <string name="create_new_client">Create New Client</string>
+    <string name="create_new_agent">Create New Agent</string>
+    <string name="select_territories_title">Select Territories</string>
+
+    <!-- Error messages -->
+    <string name="error_name_empty">Name cannot be empty</string>
+    <string name="error_invalid_email">Invalid email format</string>
+    <string name="error_invalid_phone">Invalid phone number format</string>
+    <string name="error_address_empty">Address cannot be empty</string>
+    <string name="error_meter_number_empty">Meter number cannot be empty</string>
+    <string name="error_account_number_empty">Account number cannot be empty</string>
+    <string name="error_area_empty">Area cannot be empty</string>
+    <string name="error_employee_id_empty">Employee ID cannot be empty</string>
+    <string name="error_territories_empty">At least one territory must be selected</string>
+    <string name="error_fix_form">Please fix the errors in the form before submitting</string>
+    <string name="error_email_taken">Email is already registered with another account</string>
+    <string name="error_phone_taken">Phone number is already registered with another account</string>
+
+    <!-- Success messages -->
+    <string name="client_created">Client created successfully</string>
+    <string name="agent_created">Agent created successfully</string>
+
+    <!-- Miscellaneous -->
+    <string name="no_territories_available">No territories available</string>
 </resources>

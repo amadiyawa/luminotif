@@ -7,7 +7,7 @@ import com.amadiyawa.feature_base.domain.result.OperationResult
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.OldBaseAction
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.BaseState
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.OldBaseViewModel
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import com.amadiyawa.feature_users.domain.usecase.GetUserListUseCase
 import com.amadiyawa.feature_users.presentation.screen.userlist.UserListViewModelOld.ActionOld
 import com.amadiyawa.feature_users.presentation.screen.userlist.UserListViewModelOld.UiState
@@ -63,14 +63,14 @@ internal class UserListViewModelOld(
     }
 
     internal sealed interface ActionOld : OldBaseAction<UiState> {
-        data class UserListLoadSuccess(private val newUsers: List<User>) : ActionOld {
+        data class UserListLoadSuccess(private val newOldUsers: List<OldUser>) : ActionOld {
             override fun reduce(state: UiState): UiState {
                 return if (state is Content) {
                     // If the current state is Content, append the new users to the existing list
-                    Content(state.users + newUsers)
+                    Content(state.oldUsers + newOldUsers)
                 } else {
                     // If the current state is not Content, replace the state with the new users
-                    Content(newUsers)
+                    Content(newOldUsers)
                 }
             }
         }
@@ -82,7 +82,7 @@ internal class UserListViewModelOld(
 
     @Immutable
     internal sealed interface UiState : BaseState {
-        data class Content(val users: List<User>) : UiState
+        data class Content(val oldUsers: List<OldUser>) : UiState
         data object Loading : UiState
         data object Error : UiState
     }

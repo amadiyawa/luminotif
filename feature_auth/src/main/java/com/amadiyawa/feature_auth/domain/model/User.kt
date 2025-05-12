@@ -6,6 +6,7 @@ import com.amadiyawa.feature_base.domain.util.UserStatus
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import timber.log.Timber
+import java.time.LocalDateTime
 
 @Serializable
 // Base User class
@@ -16,7 +17,8 @@ open class User(
     open val phone: String,
     open val avatarUrl: String? = null,
     open val role: UserRole,
-    open val status: UserStatus
+    open val status: UserStatus,
+    open val createdAt: String = LocalDateTime.now().toString()
 )
 
 // User types
@@ -28,6 +30,7 @@ data class ClientUser(
     override val avatarUrl: String? = null,
     override val role: UserRole,
     override val status: UserStatus,
+    override val createdAt: String = LocalDateTime.now().toString(),
     val clientData: ClientData
 ) : User(id, name, email, phone, avatarUrl, role, status)
 
@@ -39,6 +42,7 @@ data class AgentUser(
     override val avatarUrl: String? = null,
     override val role: UserRole,
     override val status: UserStatus,
+    override val createdAt: String = LocalDateTime.now().toString(),
     val agentData: AgentData
 ) : User(id, name, email, phone, avatarUrl, role, status)
 
@@ -50,6 +54,7 @@ data class AdminUser(
     override val avatarUrl: String? = null,
     override val role: UserRole,
     override val status: UserStatus,
+    override val createdAt: String = LocalDateTime.now().toString(),
     val adminData: AdminData
 ) : User(id, name, email, phone, avatarUrl, role, status)
 

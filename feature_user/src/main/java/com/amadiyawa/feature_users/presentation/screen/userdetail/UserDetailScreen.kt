@@ -50,7 +50,7 @@ import com.amadiyawa.feature_users.domain.model.Dob
 import com.amadiyawa.feature_users.domain.model.Id
 import com.amadiyawa.feature_users.domain.model.Location
 import com.amadiyawa.feature_users.domain.model.Registered
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -115,18 +115,18 @@ private fun HandleUiState(
                 }
             }
             is UserDetailViewModelOld.UiState.Content -> {
-                val user = it.user
-                UserDetail(user = user)
+                val user = it.oldUser
+                UserDetail(oldUser = user)
             }
         }
     }
 }
 
 @Composable
-private fun UserDetail(user: User) {
+private fun UserDetail(oldUser: OldUser) {
     val scrollState = rememberScrollState()
 
-    UserOverview(user)
+    UserOverview(oldUser)
 
     Spacer(modifier = Modifier.height(Dimen.Spacing.medium))
 
@@ -135,16 +135,16 @@ private fun UserDetail(user: User) {
         .padding(start = Dimen.Spacing.small, end = Dimen.Spacing.small)
         .verticalScroll(scrollState)
     ) {
-        LocationCard(user.location)
-        DobCard(userDob = user.dob)
-        RegisteredCard(userRegistered = user.registered)
-        IdCard(userId = user.id)
-        ContactCard(user = user)
+        LocationCard(oldUser.location)
+        DobCard(userDob = oldUser.dob)
+        RegisteredCard(userRegistered = oldUser.registered)
+        IdCard(userId = oldUser.id)
+        ContactCard(oldUser = oldUser)
     }
 }
 
 @Composable
-private fun UserOverview(user: User) {
+private fun UserOverview(oldUser: OldUser) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -157,9 +157,9 @@ private fun UserOverview(user: User) {
     ) {
         Row(modifier = Modifier.size(Dimen.Picture.mediumSize)) {
             PlaceholderImage(
-                url = user.picture.large,
-                contentDescription = user.picture.thumbnail,
-                gender = user.gender,
+                url = oldUser.picture.large,
+                contentDescription = oldUser.picture.thumbnail,
+                gender = oldUser.gender,
                 size = Dimen.Picture.mediumSize
             )
         }
@@ -169,10 +169,10 @@ private fun UserOverview(user: User) {
             horizontalAlignment = Alignment.Start,
         ) {
             TextTitleLarge(
-                text = user.name.title + " " + user.name.first + " " + user.name.last,
+                text = oldUser.name.title + " " + oldUser.name.first + " " + oldUser.name.last,
             )
 
-            TextTitleSmall(text = "@" + user.login.username)
+            TextTitleSmall(text = "@" + oldUser.login.username)
         }
     }
 }
@@ -552,7 +552,7 @@ private fun IdCard(userId: Id) {
 }
 
 @Composable
-private fun ContactCard(user: User) {
+private fun ContactCard(oldUser: OldUser) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -596,7 +596,7 @@ private fun ContactCard(user: User) {
                     Spacer(Modifier.weight(1f))
 
                     Text(
-                        text = user.email,
+                        text = oldUser.email,
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -613,7 +613,7 @@ private fun ContactCard(user: User) {
                     Spacer(Modifier.weight(1f))
 
                     Text(
-                        text = user.phone,
+                        text = oldUser.phone,
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -630,7 +630,7 @@ private fun ContactCard(user: User) {
                     Spacer(Modifier.weight(1f))
 
                     Text(
-                        text = user.cell,
+                        text = oldUser.cell,
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold

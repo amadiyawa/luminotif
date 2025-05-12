@@ -41,7 +41,7 @@ import com.amadiyawa.feature_base.presentation.compose.composable.TextTitleMediu
 import com.amadiyawa.feature_base.presentation.compose.composable.TextTitleSmall
 import com.amadiyawa.feature_base.presentation.compose.composable.Toolbar
 import com.amadiyawa.feature_base.presentation.compose.composable.ToolbarParams
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import com.amadiyawa.feature_users.presentation.screen.compose.composable.FloatingActionButton
 import org.koin.androidx.compose.koinViewModel
 
@@ -119,7 +119,7 @@ private fun HandleUiState(
                 }
             }
             is UserListViewModelOld.UiState.Content -> {
-                val users = it.users
+                val users = it.oldUsers
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -127,7 +127,7 @@ private fun HandleUiState(
                     content = {
                         items(users.size) { index ->
                             UserCard(
-                                user = users[index],
+                                oldUser = users[index],
                                 onUserClick = {
                                     onUserClick(users[index].login.uuid)
                                 }
@@ -153,7 +153,7 @@ private fun HandleUiState(
 
 @Composable
 private fun UserCard(
-    user: User,
+    oldUser: OldUser,
     onUserClick: () -> Unit
 ) {
     Card(
@@ -171,9 +171,9 @@ private fun UserCard(
         ) {
             Row(modifier = Modifier.size(Dimen.Picture.smallSize)) {
                 PlaceholderImage(
-                    url = user.picture.large,
-                    contentDescription = user.picture.thumbnail,
-                    gender = user.gender,
+                    url = oldUser.picture.large,
+                    contentDescription = oldUser.picture.thumbnail,
+                    gender = oldUser.gender,
                     size = Dimen.Picture.smallSize
                 )
             }
@@ -184,10 +184,10 @@ private fun UserCard(
                 modifier = Modifier.height(Dimen.Picture.smallSize)
             ) {
                 TextTitleMedium(
-                    text = user.name.title + " " + user.name.first + " " + user.name.last,
+                    text = oldUser.name.title + " " + oldUser.name.first + " " + oldUser.name.last,
                 )
 
-                TextTitleSmall(text = user.phone)
+                TextTitleSmall(text = oldUser.phone)
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -199,7 +199,7 @@ private fun UserCard(
                     content = {
                         Text(
                             modifier = Modifier.padding(3.dp),
-                            text = user.nat,
+                            text = oldUser.nat,
                             style = MaterialTheme.typography.labelLarge,
                        )
                     }

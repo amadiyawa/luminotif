@@ -1,11 +1,10 @@
 package com.amadiyawa.feature_users.data.datasource.database.model
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -36,7 +35,7 @@ internal data class UserEntityModel(
     val nat: String
 )
 
-internal fun UserEntityModel.toDomainModel() = User(
+internal fun UserEntityModel.toDomainModel() = OldUser(
     gender = this.gender,
     name = this.name.toDomainModel(),
     location = this.location.toDomainModel(),

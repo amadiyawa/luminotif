@@ -2,6 +2,7 @@ package com.amadiyawa.feature_auth.data.dto.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.time.LocalDateTime
 
 @Serializable
 data class UserResponse(
@@ -22,6 +23,12 @@ data class UserResponse(
 
     @SerialName("role")
     val role: String,  // "CLIENT", "AGENT", or "ADMIN"
+
+    @SerialName("status")
+    val status: String = "ACTIVE",
+
+    @SerialName("createdAt")
+    val createdAt: String = LocalDateTime.now().toString(),
 
     @SerialName("clientData")
     val clientData: ClientData? = null,

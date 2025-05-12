@@ -6,7 +6,7 @@ import com.amadiyawa.feature_base.domain.result.OperationResult
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.OldBaseAction
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.BaseState
 import com.amadiyawa.feature_base.presentation.screen.viewmodel.OldBaseViewModel
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import com.amadiyawa.feature_users.domain.usecase.GetUserUseCase
 import com.amadiyawa.feature_users.presentation.screen.userdetail.UserDetailViewModelOld.ActionOld
 import com.amadiyawa.feature_users.presentation.screen.userdetail.UserDetailViewModelOld.UiState
@@ -37,8 +37,8 @@ internal class UserDetailViewModelOld(
     }
 
     internal sealed interface ActionOld : OldBaseAction<UiState> {
-        class UserDetailSuccess(private val user: User) : ActionOld {
-            override fun reduce(state: UiState) = Content(user)
+        class UserDetailSuccess(private val oldUser: OldUser) : ActionOld {
+            override fun reduce(state: UiState) = Content(oldUser)
         }
 
         data object UserDetailFailure : ActionOld {
@@ -48,7 +48,7 @@ internal class UserDetailViewModelOld(
 
     @Immutable
     internal sealed interface UiState : BaseState {
-        data class Content(val user: User) : UiState
+        data class Content(val oldUser: OldUser) : UiState
         data object Loading : UiState
         data object Error : UiState
     }

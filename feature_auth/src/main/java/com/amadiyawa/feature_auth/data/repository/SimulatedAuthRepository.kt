@@ -37,7 +37,7 @@ internal class SimulatedAuthRepository : AuthRepository {
 
         return try {
             when (Random.nextInt(0, 100)) {
-                in 0..79 -> simulateSignInSuccess()  // 80% success rate
+                in 0..79 -> simulateSignInSuccess(signInRequest)  // 80% success rate
                 else -> simulateSignInFailure(signInRequest)      // 20% failure rate
             }
         } catch (e: Exception) {
@@ -66,15 +66,9 @@ internal class SimulatedAuthRepository : AuthRepository {
         }
     }
 
-    private fun simulateSignInSuccess(): OperationResult<AuthResult> {
+    private fun simulateSignInSuccess(signInRequest: SignInRequest): OperationResult<AuthResult> {
         return OperationResult.success(
-            AuthResponse.random().copy(
-                user = AuthResponse.random().user,
-                metadata = mapOf(
-                    "auth_method" to "email_password",
-                    "simulated" to "true"
-                )
-            ).toDomain()
+            AuthResponse.random(signInRequest.identifier).copy().toDomain()
         )
     }
 

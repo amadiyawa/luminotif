@@ -1,7 +1,7 @@
 package com.amadiyawa.feature_users.data.datasource.api.model
 
 import com.amadiyawa.feature_users.data.datasource.database.model.UserEntityModel
-import com.amadiyawa.feature_users.domain.model.User
+import com.amadiyawa.feature_users.domain.model.OldUser
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,7 +21,7 @@ internal data class UserApiModel(
     @SerialName("nat") val nat : String
 )
 
-internal fun UserApiModel.toDomainModel() = User(
+internal fun UserApiModel.toDomainModel() = OldUser(
     gender = this.gender,
     name = this.name.toDomainModel(),
     location = this.location.toDomainModel(),
