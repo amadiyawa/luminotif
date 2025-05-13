@@ -29,7 +29,6 @@ import java.util.UUID
  */
 class CreateUserViewModel(
     private val userRepository: UserRepository,
-    private val phoneNumberValidator: PhoneNumberValidator,
     private val userSessionManager: UserSessionManager
 ) : ViewModel() {
 
@@ -123,7 +122,7 @@ class CreateUserViewModel(
             }
 
             is CreateUserContract.Action.UpdatePhoneNumber -> {
-                val isValid = phoneNumberValidator.isValid(action.value)
+                val isValid = PhoneNumberValidator.isValid(action.value)
                 _state.update { it.copy(
                     phoneNumber = action.value,
                     phoneNumberError = if (!isValid) "Invalid phone number format" else null
@@ -245,7 +244,7 @@ class CreateUserViewModel(
             val fullNameError = if (_state.value.fullName.isBlank()) "Name cannot be empty" else null
             val isEmailValid = EmailValidator.validate(_state.value.email)
             val emailError = if (!isEmailValid) "Invalid email format" else null
-            val isPhoneValid = phoneNumberValidator.isValid(_state.value.phoneNumber)
+            val isPhoneValid = PhoneNumberValidator.isValid(_state.value.phoneNumber)
             val phoneNumberError = if (!isPhoneValid) "Invalid phone number format" else null
 
             // Type-specific validations

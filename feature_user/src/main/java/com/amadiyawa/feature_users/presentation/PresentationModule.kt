@@ -72,7 +72,6 @@ internal val presentationModule = module {
     viewModel {
         CreateUserViewModel(
             userRepository = get(),
-            phoneNumberValidator = get(),
             userSessionManager = get()
         )
     }
