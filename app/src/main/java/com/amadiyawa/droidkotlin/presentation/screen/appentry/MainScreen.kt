@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.amadiyawa.feature_base.presentation.navigation.DestinationPlacement
 import com.amadiyawa.feature_billing.presentation.navigation.InvoiceNavigationApi
+import com.amadiyawa.feature_notification.presentation.navigation.NotificationNavigationApi
 import com.amadiyawa.feature_requests.presentation.navigation.ServiceRequestNavigationApi
 import com.amadiyawa.feature_users.presentation.navigation.UserNavigationApi
 import com.amadiyawa.feature_users.presentation.navigation.UserNavigationApiComplete
@@ -106,10 +107,11 @@ fun MainScreen(
             val mainSectionRoutes = listOf(
                 InvoiceNavigationApi.Routes.INVOICE_LIST,
                 ServiceRequestNavigationApi.Routes.SERVICE_REQUEST_LIST,
-                UserNavigationApiComplete.Routes.USER_GRAPH,      // Add this for ADMIN users
+                UserNavigationApiComplete.Routes.USER_GRAPH,
                 UserNavigationApiComplete.Routes.USER_DASHBOARD,
                 UserNavigationApiComplete.Routes.CLIENT_LIST,
-                UserNavigationApiComplete.Routes.AGENT_LIST,      // Add this too
+                UserNavigationApiComplete.Routes.AGENT_LIST,
+                NotificationNavigationApi.Routes.NOTIFICATION_LIST,
                 "fallback"
             )
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- feature_notification/src/main/res/values-fr/strings.xml -->
+<resources>
+    <string name="notifications">Notifications</string>
+    <string name="mark_as_read">Marquer comme lu</string>
+    <string name="mark_all_as_read">Tout marquer comme lu</string>
+    <string name="delete_notification">Supprimer</string>
+    <string name="delete_all">Tout supprimer</string>
+    <string name="no_notifications_found">Aucune notification trouvée</string>
+    <string name="no_notifications_help">Vous recevrez des notifications ici quand elles arriveront</string>
+    <string name="expand_details">Appuyez pour développer</string>
+    <string name="collapse_details">Appuyez pour réduire</string>
+
+    <!-- CLIENT Notification Types -->
+    <string name="remaining_balance">Solde restant</string>
+    <string name="planned_outage">Coupures prévues</string>
+    <string name="service_restored">Reprise de service</string>
+    <string name="consumption_tips">Conseils de consommation</string>
+    <string name="overconsumption_alert">Alertes de surconsommation</string>
+    <string name="bill_generated">Nouvelle facture disponible</string>
+    <string name="payment_received">Paiement reçu</string>
+    <string name="service_request_update">Mise à jour demande de service</string>
+
+    <!-- AGENT Notification Types -->
+    <string name="new_service_request">Nouvelle demande de service assignée</string>
+    <string name="urgent_request">Alerte demande urgente</string>
+    <string name="work_schedule_update">Mise à jour planning de travail</string>
+    <string name="territory_change">Changement d\'affectation territoire</string>
+    <string name="meter_reading_reminder">Rappel relevé de compteur</string>
+    <string name="client_feedback">Commentaire client reçu</string>
+    <string name="performance_report">Rapport de performance disponible</string>
+
+    <!-- ADMIN Notification Types -->
+    <string name="system_alert">Alerte système</string>
+    <string name="unresolved_requests">Alerte demandes non résolues</string>
+    <string name="agent_performance">Rapport performance agent</string>
+    <string name="revenue_report">Rapport de revenus prêt</string>
+    <string name="maintenance_scheduled">Maintenance programmée</string>
+    <string name="new_user_registered">Nouvel utilisateur enregistré</string>
+    <string name="payment_issues">Problèmes de traitement des paiements</string>
+    <string name="capacity_warning">Avertissement capacité système</string>
+
+    <!-- Status -->
+    <string name="read">Lu</string>
+    <string name="unread">Non lu</string>
+    <string name="received_on">Reçu le</string>
+    <string name="new_notification">Nouveau</string>
+    <string name="priority_high">Priorité élevée</string>
+    <string name="priority_urgent">Urgent</string>
+    <string name="low">Faible</string>
+
+    <!-- Filter related -->
+    <string name="filter_notifications">Filtrer les Notifications</string>
+    <string name="all_types">Tous les Types</string>
+    <string name="clear_all_filters">Tout Effacer</string>
+    <string name="apply_filters">Appliquer</string>
+    <string name="normal">Normal</string>
+
+    <string name="priority">Priorité</string>
+    <string name="confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
+</resources>

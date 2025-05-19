@@ -11,6 +11,7 @@ include(
     ":feature_meter",
     ":feature_consumption",
     ":feature_admin",
+    ":feature_notification"
 )
 
 pluginManagement {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- feature_notification/src/main/res/values/strings.xml -->
+<resources>
+    <string name="notifications">Notifications</string>
+    <string name="mark_as_read">Mark as Read</string>
+    <string name="mark_all_as_read">Mark All as Read</string>
+    <string name="delete_notification">Delete</string>
+    <string name="delete_all">Delete All</string>
+    <string name="no_notifications_found">No notifications found</string>
+    <string name="no_notifications_help">You\'ll receive notifications here when they arrive</string>
+    <string name="expand_details">Tap to expand details</string>
+    <string name="collapse_details">Tap to collapse</string>
+
+    <!-- CLIENT Notification Types -->
+    <string name="remaining_balance">Remaining Balance</string>
+    <string name="planned_outage">Planned Outage</string>
+    <string name="service_restored">Service Restored</string>
+    <string name="consumption_tips">Consumption Tips</string>
+    <string name="overconsumption_alert">Overconsumption Alert</string>
+    <string name="bill_generated">New Bill Available</string>
+    <string name="payment_received">Payment Received</string>
+    <string name="service_request_update">Service Request Update</string>
+
+    <!-- AGENT Notification Types -->
+    <string name="new_service_request">New Service Request Assigned</string>
+    <string name="urgent_request">Urgent Request Alert</string>
+    <string name="work_schedule_update">Work Schedule Update</string>
+    <string name="territory_change">Territory Assignment Changed</string>
+    <string name="meter_reading_reminder">Meter Reading Reminder</string>
+    <string name="client_feedback">Client Feedback Received</string>
+    <string name="performance_report">Performance Report Available</string>
+
+    <!-- ADMIN Notification Types -->
+    <string name="system_alert">System Alert</string>
+    <string name="unresolved_requests">Unresolved Requests Alert</string>
+    <string name="agent_performance">Agent Performance Report</string>
+    <string name="revenue_report">Revenue Report Ready</string>
+    <string name="maintenance_scheduled">Maintenance Scheduled</string>
+    <string name="new_user_registered">New User Registered</string>
+    <string name="payment_issues">Payment Processing Issues</string>
+    <string name="capacity_warning">System Capacity Warning</string>
+
+    <!-- Status -->
+    <string name="read">Read</string>
+    <string name="unread">Unread</string>
+    <string name="received_on">Received on</string>
+    <string name="new_notification">New</string>
+    <string name="priority_high">High Priority</string>
+    <string name="priority_urgent">Urgent</string>
+    <string name="low">Low</string>
+
+    <!-- Filter related -->
+    <string name="filter_notifications">Filter Notifications</string>
+    <string name="all_types">All Types</string>
+    <string name="clear_all_filters">Clear All</string>
+    <string name="apply_filters">Apply</string>
+    <string name="normal">Normal</string>
+
+    <string name="priority">Priority</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+</resources>

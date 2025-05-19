@@ -185,7 +185,7 @@ class UserNavigationApiComplete : FeatureNavigationApi {
                     selectedIcon = Icons.Filled.SupervisedUserCircle,
                     unselectedIcon = Icons.Outlined.SupervisedUserCircle,
                     placement = DestinationPlacement.BottomBar,
-                    order = 3 // Second position in bottom bar
+                    order = 3
                 )
             )
             allowedRoles.contains(UserRole.AGENT) -> listOf(
@@ -195,7 +195,7 @@ class UserNavigationApiComplete : FeatureNavigationApi {
                     selectedIcon = Icons.Filled.Person,
                     unselectedIcon = Icons.Outlined.Person,
                     placement = DestinationPlacement.BottomBar,
-                    order = 3 // Second position in bottom bar
+                    order = 3
                 )
             )
             else -> emptyList()

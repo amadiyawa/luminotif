@@ -81,6 +81,7 @@ dependencies {
     implementation(projects.featureUser)
     implementation(projects.featureBilling)
     implementation(projects.featureRequests)
+    implementation(projects.featureNotification)
 }
 
 /**

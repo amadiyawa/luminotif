@@ -5,11 +5,13 @@ import com.amadiyawa.feature_auth.featureAuthModule
 import com.amadiyawa.feature_base.featureBaseModule
 import com.amadiyawa.feature_base.presentation.navigation.NavigationRegistry
 import com.amadiyawa.feature_billing.featureBillingModule
+import com.amadiyawa.feature_notification.featureNotificationModule
 import com.amadiyawa.feature_onboarding.featureOnboardingModule
 import com.amadiyawa.feature_requests.featureRequestsModule
 import com.amadiyawa.feature_users.featureUserModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.compose.getKoin
 import org.koin.core.context.GlobalContext
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatformTools
@@ -41,6 +43,7 @@ class MyApplication: Application() {
             modules(featureBillingModule)
             modules(featureRequestsModule)
             modules(featureUserModule)
+            modules(featureNotificationModule)
         }
 
         // Trigger feature registrations
@@ -68,6 +71,13 @@ class MyApplication: Application() {
                 Timber.d("User feature registered successfully")
             } catch (e: Exception) {
                 Timber.e(e, "Failed to register user feature")
+            }
+
+            try {
+                koin.get<Unit>(named("initNotificationFeature"))
+                Timber.d("Notification feature registered successfully")
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to register notification feature")
             }
 
             // Log registered features
