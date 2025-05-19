@@ -8,8 +8,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Assignment
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
@@ -624,11 +627,11 @@ private fun NotificationItem(
 // Helper function to get appropriate icon for action
 private fun getActionIcon(actionData: Map<String, String>) = when (actionData["action"]) {
     "view_bill" -> Icons.Default.Receipt
-    "view_request" -> Icons.Default.Assignment
+    "view_request" -> Icons.AutoMirrored.Filled.Assignment
     "top_up" -> Icons.Default.Payment
     "view_consumption_tips" -> Icons.Default.Lightbulb
     "call_support" -> Icons.Default.Phone
-    else -> Icons.Default.OpenInNew
+    else -> Icons.AutoMirrored.Filled.OpenInNew
 }
 
 @Composable
@@ -745,11 +748,24 @@ private fun ConfirmationDialog(
 
 private fun getActionButtonText(actionData: Map<String, String>): String {
     return when (actionData["action"]) {
-        "view_bill" -> "View Bill"
-        "view_request" -> "View Request"
-        "top_up" -> "Top Up Account"
-        "view_consumption_tips" -> "View Tips"
-        "call_support" -> "Call Support"
-        else -> "View Details"
+        "view_bill" -> "Voir la Facture"
+        "view_request" -> "Voir la Demande"
+        "top_up" -> "Recharger le Compte"
+        "view_consumption_tips" -> "Voir les Conseils"
+        "call_support" -> "Appeler le Support"
+        "view_schedule" -> "Voir l'Horaire"
+        "view_meters" -> "Voir les Compteurs"
+        "view_feedback" -> "Voir les Commentaires"
+        "view_performance" -> "Voir la Performance"
+        "view_territory" -> "Voir le Territoire"
+        "view_requests" -> "Voir les Demandes"
+        "view_agent" -> "Voir l'Agent"
+        "view_report" -> "Voir le Rapport"
+        "view_maintenance" -> "Voir la Maintenance"
+        "view_user" -> "Voir l'Utilisateur"
+        "view_payments" -> "Voir les Paiements"
+        "view_system" -> "Voir le Système"
+        "emergency_protocol" -> "Protocole d'Urgence"
+        else -> "Voir les Détails"
     }
 }

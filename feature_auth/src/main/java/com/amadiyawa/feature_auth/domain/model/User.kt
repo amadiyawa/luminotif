@@ -4,8 +4,6 @@ import com.amadiyawa.feature_base.domain.util.AdminAccessLevel
 import com.amadiyawa.feature_base.domain.util.UserRole
 import com.amadiyawa.feature_base.domain.util.UserStatus
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import timber.log.Timber
 import java.time.LocalDateTime
 
 @Serializable
@@ -74,24 +72,3 @@ data class AgentData(
 data class AdminData(
     val accessLevel: AdminAccessLevel
 )
-
-fun User.toJson(): String {
-    val json = Json {
-        ignoreUnknownKeys = true
-        encodeDefaults = true
-    }
-    return json.encodeToString(User.serializer(), this)
-}
-
-fun String.toSignIn(): User? {
-    return try {
-        val json = Json {
-            ignoreUnknownKeys = true
-            encodeDefaults = true
-        }
-        json.decodeFromString(User.serializer(), this)
-    } catch (e: Exception) {
-        Timber.e(e, "Error parsing SignIn from JSON")
-        null
-    }
-}
